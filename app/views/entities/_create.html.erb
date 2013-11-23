@@ -1,0 +1,8 @@
+New Entity:
+<%= form_tag(entities_path) do %>
+  <div class="styled-select">
+    <%= select_tag( "type", 
+          options_from_collection_for_select(get_valid_type_class_names, "to_s", "to_s")) %>
+    <%= submit_tag("Create") %>
+  </div>
+<% end %>

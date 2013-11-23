@@ -16,6 +16,9 @@ f.each do |line|
       :name => line.strip,
       :tenant_id => Tenant.current.id,
       :project_id =>Project.current.id)
+    h.run_task "whois", {}
+    h.run_task "geolocate_host", {}
+
   rescue Exception => e
     puts "ohnoes! #{e}"
   end

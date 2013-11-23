@@ -142,6 +142,7 @@ class TaskRunSetsController < ApplicationController
         entity_id = key.split("#").last
         task_run_set_id = task_run_set.id.to_s
 
+        # Get the current tenant / project
         tenant_id = Tenant.current.id.to_s
         project_id = Project.current.id.to_s
         
@@ -166,6 +167,7 @@ class TaskRunSetsController < ApplicationController
             task_run_set_id, 
             options)
         end
+
     end
     
     redirect_to task_run_set_path task_run_set.id

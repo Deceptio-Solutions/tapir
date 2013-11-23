@@ -2,8 +2,8 @@ class TasksController < ApplicationController
 
   before_filter :authenticate_user!
 
-  # GET /Tasks
-  # GET /Tasks.json
+  # GET /tasks
+  # GET /tasks.json
   def index
     @tasks = Task.all
     @tasks.sort_by!{ |t| t.name.downcase }
@@ -23,8 +23,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /Tasks/1
-  # GET /Tasks/1.json
+  # GET /tasks/1
+  # GET /tasks/1.json
   def show
     @task = Task.find(params[:id])
 
@@ -34,8 +34,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /Tasks/new
-  # GET /Tasks/new.json
+  # GET /tasks/new
+  # GET /tasks/new.json
   def new
     @task = Task.new
 
@@ -45,13 +45,13 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /Tasks/1/edit
+  # GET /tasks/1/edit
   def edit
     @task = Task.find(params[:id])
   end
 
-  # POST /Tasks
-  # POST /Tasks.json
+  # POST /tasks
+  # POST /tasks.json
   def create
     @task = Task.new(params[:tapir_task])
 
@@ -66,8 +66,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # PUT /Tasks/1
-  # PUT /Tasks/1.json
+  # PUT /tasks/1
+  # PUT /tasks/1.json
   def update
     @task = Task.find(params[:id])
 
@@ -82,8 +82,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /Tasks/1
-  # DELETE /Tasks/1.json
+  # DELETE /tasks/1
+  # DELETE /tasks/1.json
   #def destroy
   #  @task = Task.find(params[:id])
   #  @task.destroy

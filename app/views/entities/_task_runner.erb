@@ -4,11 +4,13 @@
   <form name="task_runner" id="run_task" action="/run_task" method="POST"> 
     <%=token_tag form_authenticity_token %>
     <input type="hidden" type="checkbox" name="entities[<%="#{@entity._type}##{@entity.id}"%>]" value="checked"></input>
-    <select name="task_name">
-    <% @entity.tasks.each do |t| %>
-      <option value="<%=t.name%>"><%=t%></option>
-    <% end %>
-    </select>
+    <div class="select">
+      <select name="task_name">
+      <% @entity.tasks.each do |t| %>
+        <option value="<%=t.name%>"><%=t%></option>
+      <% end %>
+      </select>
+    </div>
     <input type="Submit" value="Run Task"></input>
   </form>
 <% else %>

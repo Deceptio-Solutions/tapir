@@ -16,6 +16,7 @@ god_config
 # Ignore configuration files
 config/database.yml
 config/api_keys.yml
+config/initializers/raven.rb # raven configuration file
 #config/mongoid.yml
 
 # Ignore the default SQLite database.

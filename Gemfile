@@ -95,6 +95,10 @@ gem 'capybara'
 # Infrastructure
 gem 'fog'
 
+# Error handling
+gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
+
+
 group :pain do
   
   # 

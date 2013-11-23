@@ -16,6 +16,15 @@ GIT
       rails (>= 3.1.0)
 
 GIT
+  remote: https://github.com/getsentry/raven-ruby.git
+  revision: 94a8ae3b26c8202437db5e515b4f94581316c544
+  specs:
+    sentry-raven (0.7.0)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
+
+GIT
   remote: https://github.com/pentestify/jquery-datatables-rails
   revision: 7b4197b9d09a90f31cbff6d2c984e168f725a91a
   specs:
@@ -103,6 +112,8 @@ GEM
     excon (0.25.3)
     execjs (2.0.1)
     exifr (1.1.3)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     fastercsv (1.5.5)
     ffi (1.9.0)
     flickr (1.0.2)
@@ -180,6 +191,7 @@ GEM
       tzinfo (~> 0.3.22)
     moped (1.5.1)
     multi_json (1.8.0)
+    multipart-post (1.2.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9)
     net-scp (1.1.2)
@@ -297,6 +309,7 @@ GEM
     unf (0.1.2)
       unf_ext
     unf_ext (0.0.6)
+    uuidtools (2.1.4)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.3)
@@ -350,6 +363,7 @@ DEPENDENCIES
   rspec
   sass-rails (~> 3.2.3)
   selenium-webdriver
+  sentry-raven!
   shodan
   tabulous (~> 1.3.2)
   therubyracer

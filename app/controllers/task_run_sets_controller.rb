@@ -41,6 +41,7 @@ class TaskRunSetsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js   #{ render :text => "show.js.erb" } # show.js.erb -> http://stackoverflow.com/questions/4016285/rails-3-simple-ajaxy-page-updates
       format.json { render json: @task_run_set }
     end
   end

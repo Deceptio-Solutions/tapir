@@ -1,0 +1,26 @@
+  <table border="1" name="results" id="results">
+    <tr>
+      <th>Task Name &amp; Task Entity</th>
+      <th>Result</th>
+      <th>Detailed Log</th>
+    </tr>
+<% @task_run_set.task_runs.each do |task_run| %>
+    <tr>
+      <td><%= link_to task_run.task_name, task_path(Task.find_by_name(task_run.task_name).name) %> <br/>
+          <%= link_to task_run.entity, entity_path(task_run.entity) %></td>
+      <td>
+        <ul>
+        <% task_run.entity_mappings.each do |x| %>
+          <% child = x.get_child 
+            if child %>
+          <li><%= link_to(child,entity_path(child)) %> <%= link_to "[X]", entity_path(child), :method => :delete %></li>
+        <%  end 
+          end %>
+        </ul>
+      </td>
+      <td>
+        <%= link_to("log", task_run) %>
+      </td>
+    </tr>
+<% end %>
+  </table><br/>

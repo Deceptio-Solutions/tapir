@@ -1,3 +1,5 @@
 <%= link_to image_tag("/icons/refresh_icon.jpg"), @reload_task_run_sets_path, :remote => true %>
-<%= render 'results' %>
+<div class="results">
+  <%= render 'results' %>
+</div>
 <%= link_to 'Completed Tasks', task_run_sets_path %>

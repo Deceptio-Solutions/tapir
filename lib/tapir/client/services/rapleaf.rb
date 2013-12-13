@@ -15,7 +15,13 @@ module Rapleaf
     # This makes a search against the rapportive API. Note that
     # a new session token is currently requested for every call
     def search(email_address)
-      @api.query_by_email(email_address)
+      result = {}
+      begin
+        result = @api.query_by_email(email_address)
+      rescue Exception => e
+        # silently catch errors
+      end
+    result
     end
 
     private

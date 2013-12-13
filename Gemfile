@@ -72,6 +72,7 @@ gem 'whois'
 gem 'linkedin'
 gem 'flickr'
 gem 'shodan'
+gem 'rapleaf_api'
 
 # Debugging 
 gem 'pry'

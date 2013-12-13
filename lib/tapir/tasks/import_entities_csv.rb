@@ -40,29 +40,29 @@ def run
 
   # 
   # This task allows you to import a file with the following format: 
-  # Entities::EmailAddress, "{name : "test@tapirrecon.com" }"
-  # Entities::EmailAddress, "{name : "blah@tapirrecon.com" }"
-  # Entities::EmailAddress, "{name : "more@tapirrecon.com" }"
   #
-  # The format is a string type followed by a json hash of fields. One
-  # entity per line. 
+  # { "type" : "Entities::EmailAddress", "name" : "test@test.com" }
+  #
+  # The format is a JSON hash of fields, with a specified type. One 
+  # entity / line
   #
   
   # For each line in the file, create an entity
-  text.each_line do |line|
-    type_string, fields = line.split(",")
-
+  text.each_line do |json|
     begin
-      field_hash = JSON.load(fields)
+      fields = JSON.load(json)
+
+      # Check to make sure a type was specified
+      next unless fields['type']
 
       # Let's sanity check the type first. 
-      next unless Entities::Base.descendants.map{|x| x.to_s}.include?(type_string)
+      next unless Entities::Base.descendants.map{|x| x.to_s}.include?(fields['type'])
 
       # Okay, we know its a valid type, so go ahead and eval it. 
-      type = eval(type_string)
+      type = eval(fields['type'])
 
       # Create the entity
-      create_entity type, field_hash
+      create_entity type, fields
 
     rescue Exception => e
       @task_logger.error "Encountered exception #{e}"

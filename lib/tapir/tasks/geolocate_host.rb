@@ -1,5 +1,4 @@
 require 'geoip'
-require 'iconv'
 
 def name
   "geolocate_host"

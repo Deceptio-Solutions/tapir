@@ -49,7 +49,6 @@ ReportTemplate.create(
   :template => "physical_locations",
   :setup => "@entities = Entities::PhysicalLocation.all")
 
-
 Tenant.each do |t|
   # Set the current tenant, so the user is saved correctly (it's tenant-scoped)
   Tenant.current = t
@@ -57,24 +56,37 @@ Tenant.each do |t|
   # Check to see if we have any users available for this tenant
   if User.count == 0
     puts "Could not find a user for tenant #{t.host}"
-    
-    account_domain = t.host
-    account_domain = account_domain.split(".")
-    account_domain.shift  #drop the subdomain
-    account_domain = account_domain.join(".")
 
-    account_name = "#{t.host.split(".").first}"
-    account_email = "#{account_name}@#{account_domain}"
+    # generate a password
     account_password = SecureRandom.hex(6)
 
-    user = User.create!( 
-      :name => account_name, 
-      :email => account_email,
-      :password => account_password,  
-      :password_confirmation => account_password)
-    puts "Created user #{user.email} for tenant #{t.host} with password #{account_password}"
+    if t.host == "localhost"
+      user = User.create!( 
+        :name => "user", 
+        :email => "user@localhost.local",
+        :password => account_password,  
+        :password_confirmation => account_password)
+      puts "Created user #{user.email} for tenant #{t.host} with password #{account_password}"
+    else
+      ### 
+      ### Calculate the name and create a user account
+      ###
+      account_domain = t.host
+      account_domain = account_domain.split(".")
+      account_domain.shift #drop the subdomain 
+      account_domain = account_domain.join(".")
+
+      account_name = "#{t.host.split(".").first}"
+      account_email = "#{account_name}@#{account_domain}"
+
+      user = User.create!( 
+        :name => account_name, 
+        :email => account_email,
+        :password => account_password,  
+        :password_confirmation => account_password)
+      puts "Created user #{user.email} for tenant #{t.host} with password #{account_password}"
+    end
   else
     puts "User exists for tenant #{t.host}"
   end
-
 end

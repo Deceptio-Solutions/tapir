@@ -82,13 +82,14 @@ def run
     # Create an SSL Certificate entity
     create_entity Entities::SslCert, { :name => cert.subject,
                                        :text => cert.to_text }
-
-
   rescue OpenSSL::SSL::SSLError => e
     @task_logger.error "Caught an error: #{e}"
   rescue Errno::ECONNRESET => e 
     @task_logger.error "Caught an error: #{e}"
+  rescue RuntimeError => e 
+    @task_logger.error "Caught an error: #{e}"
   end
+  
 end
 
 def cleanup

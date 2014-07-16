@@ -80,7 +80,7 @@ def run
     response.each_header do |name,value|
       create_entity(Entities::WebApplicationHeader, {
         :name => "#{name}: #{value}", 
-        :content => "#{value}" })
+        :content => "#{name}: #{value}" })
     end
   end
 

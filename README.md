@@ -88,7 +88,7 @@ Navigate to the root of the TAPIR directory and install the ruby dependencies:
 
 ## Getting Started with TAPIR
 
-### Using the Web Interface (Start Here!)
+### Using the Web Interface (After you've installed the prerequisites!)
 
 To start the server, in the root of the TAPIR directory, run: 
 

@@ -54,6 +54,16 @@ def http_fetch(uri_str,limit = 10)
       @task_logger.log "Unable to connect: #{e}"
     rescue EOFError => e
       @task_logger.log "Unable to connect: #{e}"
+    rescue SocketError => e
+      @task_logger.log "Unable to connect: #{e}"
+    rescue SystemCallError => e
+      @task_logger.log "Unable to connect: #{e}"
+    rescue ArgumentError => e
+      @task_logger.log "Argument Error #{e}"
+    rescue Encoding::InvalidByteSequenceError => e
+      @task_logger.log "Encoding error: #{e}"
+    rescue Encoding::UndefinedConversionError => e
+      @task_logger.log "Encoding error: #{e}"
     end
     
   response
@@ -69,7 +79,7 @@ def run
   if response
     response.each_header do |name,value|
       create_entity(Entities::WebApplicationHeader, {
-        :name => "#{name}", 
+        :name => "#{name}: #{value}", 
         :content => "#{value}" })
     end
   end

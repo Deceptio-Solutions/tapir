@@ -92,14 +92,13 @@ Navigate to the root of the TAPIR directory and install the ruby dependencies:
 
 To start the server, in the root of the TAPIR directory, run: 
 
-	$ export RAILS_ENV=development      # to set development mode (no background tasks)
-	$ bundle exec rackup                # to start the server
+	$ RAILS_ENV=development bundle exec rackup                # to start the server
 
 Now browse to http://[server_name]:9292 
 
 In order to log in, you'll need to generate a username and password - Make sure you do this AFTER browsing to the web interface for the first time.  
 
-	$ bundle exec rake db:seed           # to generate a username and password
+	$ RAILS_ENV=development bundle exec rake db:seed           # to generate a username and password
 
 ### Configure data sources
 		
@@ -107,7 +106,7 @@ Most data sources are available with just an internet connection. Some require y
 
 The latest geolitecity (geolocation) data can be pulled by running: 
 
-	$ cd [TAPIR_root]/data
+	$ cd $TAPIR_ROOT/data
 	$ ./geolitecity/get_latest.sh 
 
 ### Using the Scriptable Console (Advanced)
@@ -115,7 +114,7 @@ Once you have a database, simply run `$ bundle exec ./util/console.rb` - this wi
 
 Creating a host entity & running tasks: 
 
-	$ cd [TAPIR_root]/util
+	$ cd $TAPIR_ROOT/util
 	$ bundle exec ./console.rb
 
 		TAPIR> Tenant.current = Tenant.first
@@ -125,8 +124,12 @@ Creating a host entity & running tasks:
 		TAPIR> host.run_task("geolocate_host",{})
 		TAPIR> host.children.map{ |c| puts "#{c.class}: #{c.name}" };
 
-### Known Issues
+### Production
 
-Installation of therubyracer gem might fail due to an invalid GEM specification file, refer to the following link for details: 
+In production, resque is used for background tasks. Background workers can be enabled with the following: 
 
-	https://github.com/cowboyd/therubyracer/issues/140#issuecomment-4707363
+    $ cd $TAPIR_ROOT
+
+    $ bundle install && bundle exec rake assets:clean && bundle exec rake assets:precompile
+    $ bundle exec god terminate && bundle exec god -c god_config
+    $ RAILS_ENV=production bundle exec rackup

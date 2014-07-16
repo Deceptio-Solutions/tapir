@@ -1,6 +1,6 @@
 
 # 
-# This module is an adaptation of DNSSnoopDogg by @felmoltor
+# This task is an adaptation of DNSSnoopDogg by @felmoltor
 #  * https://github.com/felmoltor/DNSSnoopDogg/blob/master/dnssnoopdogg.rb
 #
 # Some interesting documentation about it:
@@ -348,8 +348,7 @@ def run
 
   snoopresults = {}
   dnsservers = []
-  domains = IO.readlines("#{Rails.root}/data/domain_top1k.list")
-  #domains = ["google.com","bing.com","intrigue.io", "aruvio.com"]
+  domains = IO.readlines("#{Rails.root}/data/domain_top10.list")
 
   snooper = DNSSnooper.new(@entity.name,@options[:method])
   #snoopresults[] = {}

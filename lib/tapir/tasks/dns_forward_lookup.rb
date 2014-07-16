@@ -6,6 +6,10 @@ def pretty_name
   "DNS Forward Lookup"
 end
 
+def authors
+  ['Felipe Molina (@felmoltor)', 'jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "Query for the ip address of the given DNS name"

@@ -6,6 +6,10 @@ def pretty_name
   "WHOIS Lookup"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "Perform a whois lookup for a given entity"

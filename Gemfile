@@ -63,6 +63,7 @@ gem 'exifr'
 
 # Network Services
 gem 'dnsruby'
+gem 'net-dns'
 gem 'geoip'
 gem 'whois'
 #gem 'packetfu'

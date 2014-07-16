@@ -6,6 +6,10 @@ def pretty_name
   "Search the Rapleaf database"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Uses the Rapleaf API to search for information"
 end

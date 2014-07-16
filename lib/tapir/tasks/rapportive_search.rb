@@ -6,6 +6,10 @@ def pretty_name
   "Search the Rapportive database"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Uses the Rapportive API to search for information"
 end

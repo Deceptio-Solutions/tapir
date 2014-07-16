@@ -1,11 +1,13 @@
-
-
 def name
   "import_entities_csv"
 end
 
 def pretty_name
   "Import Entities CSV"
+end
+
+def authors
+  ['jcran']
 end
 
 ## Returns a string which describes what this task does

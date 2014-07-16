@@ -6,6 +6,10 @@ def pretty_name
   "Built With"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task determines platform and technologies of the target"

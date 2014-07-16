@@ -7,6 +7,10 @@ def pretty_name
   "EDGAR Corporation Search"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes this task.
 def description
   "This task hits the Corpwatch API and creates an entity for all found entities."

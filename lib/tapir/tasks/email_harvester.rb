@@ -7,6 +7,10 @@ def pretty_name
   "Email Harvester"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes this task.
 def description
   "This task scrapes email addresses via search engines."

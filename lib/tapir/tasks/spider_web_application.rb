@@ -8,6 +8,10 @@ def pretty_name
   "Spider a web application and create web pages"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task uses anemone to spider a web application, creating web pages"

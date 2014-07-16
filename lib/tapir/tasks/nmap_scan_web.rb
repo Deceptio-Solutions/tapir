@@ -6,6 +6,10 @@ def pretty_name
   "Nmap Scan Web"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task runs an nmap scan on the target host or domain to detect common web ports."

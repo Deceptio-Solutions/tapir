@@ -6,6 +6,10 @@ def pretty_name
   "Import Leadlander list"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This is a task to import Leadlander information."

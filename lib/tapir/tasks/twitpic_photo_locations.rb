@@ -10,6 +10,10 @@ def pretty_name
   "Twitpic search for photos and their EXIF tags"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes what this task does
 def description
   "This task pulls down photos for a specified users. It greps the photo data for location info."

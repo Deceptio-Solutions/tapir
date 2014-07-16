@@ -6,6 +6,10 @@ def pretty_name
   "Parse For Interesting Content"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task parses the incoming entity's content for interesting content and create findings."

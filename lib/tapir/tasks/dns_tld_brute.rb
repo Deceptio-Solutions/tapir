@@ -12,6 +12,10 @@ def pretty_name
   "DNS TLD Brute"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes what this task does
 def description
   "Bruteforce the top-level domains (TLDs) for a given entity"

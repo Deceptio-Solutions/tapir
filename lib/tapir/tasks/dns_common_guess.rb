@@ -8,6 +8,10 @@ def pretty_name
   "DNS Common Name Guess"
 end
 
+def authors
+  ['Felipe Molina (@felmoltor)', 'jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "Guess some common domain names based on the organization name"

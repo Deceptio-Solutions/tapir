@@ -8,6 +8,10 @@ def pretty_name
   "Probe Port"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task connects to a service and sends data"

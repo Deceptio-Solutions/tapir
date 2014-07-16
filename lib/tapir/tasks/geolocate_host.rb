@@ -8,6 +8,10 @@ def pretty_name
   "Geolocate a Host"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Performs a geolocation lookup based on an ip address"
 end

@@ -6,6 +6,10 @@ def pretty_name
   "Search the SHODAN database"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Uses the SHODAN API to search for information"
 end

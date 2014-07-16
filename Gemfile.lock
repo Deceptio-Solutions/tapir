@@ -192,6 +192,7 @@ GEM
     moped (1.5.1)
     multi_json (1.8.0)
     multipart-post (1.2.0)
+    net-dns (0.8.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9)
     net-scp (1.1.2)
@@ -354,6 +355,7 @@ DEPENDENCIES
   mechanize
   mongo-resque
   mongoid (~> 3.0.0)
+  net-dns
   nmap-parser
   nokogiri
   open_uri_redirections

@@ -6,6 +6,10 @@ def pretty_name
   "Check for security-related headers"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task checks for security headers on a web application"

@@ -8,6 +8,10 @@ def pretty_name
   "DNS Subdomain Brute"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes what this task does
 def description
   "Simple DNS Subdomain Bruteforce"

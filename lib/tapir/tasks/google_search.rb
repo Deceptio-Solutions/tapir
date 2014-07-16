@@ -7,6 +7,10 @@ def pretty_name
   "Google Search"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes this task.
 def description
   "This task hits the Google API and finds related content. Discovered domains are created."

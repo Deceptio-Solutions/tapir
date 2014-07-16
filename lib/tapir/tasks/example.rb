@@ -6,6 +6,10 @@ def pretty_name
   "Example Task"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This is an example Tapir task. It associates a random host with the calling entity."

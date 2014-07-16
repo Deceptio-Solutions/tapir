@@ -8,6 +8,10 @@ def pretty_name
   "DNS TXT Record lookup"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "Query for txt records at this domain"

@@ -6,6 +6,10 @@ def pretty_name
   "Convert Network Service to Web Application"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task converts a network service into a web application"

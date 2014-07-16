@@ -8,6 +8,10 @@ def pretty_name
   "Convert Netblock to Hosts"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task converts a netblock into host records"

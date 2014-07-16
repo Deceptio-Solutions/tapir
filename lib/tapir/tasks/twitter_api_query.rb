@@ -6,6 +6,10 @@ def pretty_name
   "Query Twitter for a given account"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes what this task does
 def description
   "This task grabs information from Twitter for a given acount."

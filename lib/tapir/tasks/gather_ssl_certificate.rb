@@ -10,6 +10,10 @@ def pretty_name
   "Gather SSL Certificate"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task allows you to gather an SSL Certificate."

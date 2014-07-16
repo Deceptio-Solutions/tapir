@@ -6,6 +6,10 @@ def pretty_name
   "DNS Reverse Lookup"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Look up the name of the given ip address"
 end

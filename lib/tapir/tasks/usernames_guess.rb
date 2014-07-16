@@ -6,6 +6,10 @@ def pretty_name
   "Usernames Guess"
 end
 
+def authors
+  ['jcran']
+end
+
 ## Returns a string which describes what this task does
 def description
   "This task can be used to guess usernames, given a user."

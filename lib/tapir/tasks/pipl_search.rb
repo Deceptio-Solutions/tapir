@@ -9,6 +9,10 @@ def pretty_name
   "Search the Pipl database"
 end
 
+def authors
+  ['jcran']
+end
+
 def description
   "Uses the Pipl API to search for information"
 end

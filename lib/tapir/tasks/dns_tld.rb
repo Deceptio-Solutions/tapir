@@ -8,6 +8,10 @@ def pretty_name
   "DNS TLD"
 end
 
+def authors
+  ['jcran']
+end
+
 # Returns a string which describes what this task does
 def description
   "Add an entity for record's TLD"

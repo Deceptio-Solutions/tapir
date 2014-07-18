@@ -1,3 +1,5 @@
+require 'socket'
+
 def name
   "whois"
 end
@@ -74,12 +76,19 @@ def run
           # If it's an ip address, let's create a host record
           #
           if nameserver.to_s =~ /\d\.\d\.\d\.\d/
-            new_entity = create_entity Entities::Host , :name => nameserver.to_s
+            create_entity Entities::Host, :name => nameserver.to_s
+            create_entity Entities::DnsServer, :name => nameserver.to_s
           else
             #
             # Otherwise it's another domain, and we can't do much but add it
             #
-            new_entity = create_entity Entities::DnsRecord, :name => nameserver.to_s
+            create_entity Entities::DnsRecord, :name => nameserver.to_s
+
+            # Resolve the name
+            ip_address = IPSocket::getaddress(nameserver.to_s)
+            create_entity Entities::Host, :name => ip_address
+            create_entity Entities::DnsServer, :name => ip_address
+
           end
         end
       end

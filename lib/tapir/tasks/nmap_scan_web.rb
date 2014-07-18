@@ -99,7 +99,6 @@ def run
 
           create_entity(Entities::WebApplication, {
             :name => uri,
-            :host => entity.host,
             :netsvc => entity
           })
 
@@ -108,7 +107,6 @@ def run
             uri = "#{protocol}#{dns_record.name}:#{entity.port_num}"
             create_entity(Entities::WebApplication, {
               :name => uri,
-              :host => dns_record.name,
               :netsvc => entity
             })
           end

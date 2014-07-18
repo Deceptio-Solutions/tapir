@@ -19,7 +19,7 @@ end
 def allowed_types
   [ Entities::Host, 
     Entities::DnsRecord, 
-    Entities::WebApplication]
+    Entities::WebApplication ]
 end
 
 ## Returns an array of valid options and their description/type for this task

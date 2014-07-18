@@ -35,3 +35,4 @@ public/images/*
 # Ignore secret token
 .secret
 doc
+.DS_Store

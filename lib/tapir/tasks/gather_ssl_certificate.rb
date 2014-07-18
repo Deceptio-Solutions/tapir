@@ -43,7 +43,7 @@ def run
     port = @entity.port_num
   else
     # if it's a web application
-    hostname = @entity.host.name
+    hostname = @entity.netsvc.host.name
     # Check to see if there's an associated service first
     if @entity.netsvc
       port = @entity.netsvc.port_num 

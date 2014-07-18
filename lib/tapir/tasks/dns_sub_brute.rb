@@ -43,11 +43,13 @@ end
     if @options[:subdomain_list]
       subdomain_list = @options['subdomain_list']
     else
+      # use the deepmagic list
+      subdomain_list = IO.readlines("#{Rails.root}/data/dns_sub.list")
       # Add a builtin domain list  
-      subdomain_list = ["mx", "mx1", "mx2", "www", "ww2", "ns1", "ns2", "ns3", "test", "mail", "owa", "vpn", "admin",
-        "gateway", "secure", "admin", "service", "tools", "doc", "docs", "network", "help", "en", "sharepoint", "portal",
-        "public", "private", "pub", "zeus", "mickey", "time", "web", "it", "my", "photos", "safe", "download", "dl", 
-        "search", "staging"]
+      #subdomain_list = ["mx", "mx1", "mx2", "www", "ww2", "ns1", "ns2", "ns3", "test", "mail", "owa", "vpn", "admin",
+      #  "gateway", "secure", "admin", "service", "tools", "doc", "docs", "network", "help", "en", "sharepoint", "portal",
+      #  "public", "private", "pub", "zeus", "mickey", "time", "web", "it", "my", "photos", "safe", "download", "dl", 
+      #  "search", "staging"]
     end
 
     @task_logger.good "Using subdomain list: #{subdomain_list}"
@@ -67,6 +69,7 @@ end
     end
 
     subdomain_list.each do |sub|
+      sub = sub.chomp
       begin
         # Calculate the domain name
         if @options[:mashed_domains]

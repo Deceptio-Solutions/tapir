@@ -1,7 +1,7 @@
 require 'anemone'
 
 def name
-  "spider_web_application"
+  "web_spider"
 end
 
 def pretty_name

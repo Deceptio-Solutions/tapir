@@ -11,6 +11,7 @@ class EntityManager
     all_mapped_children = EntityMapping.where(:parent_id => id)
 
     children = []
+    
     #
     # Here, we check to see if we just have a single entity mapping
     #
@@ -27,6 +28,7 @@ class EntityManager
         children << child if child
       end
     end
+
   children
   end
   

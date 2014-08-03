@@ -19,13 +19,14 @@ module ApplicationHelper
   end
 
   def render_parents(entity, result = "", depth=0)
+
     if entity.parents.empty?
       # Base case - Close up the upper-lists
       return result
     else
       depth = depth + 1
     end
-    
+
     entity.parents.each do |x|
       # Prevent loops
       next if x.parents.include? entity
@@ -33,9 +34,8 @@ module ApplicationHelper
       # Print this parent at the beginning of the string
       result.prepend "#{print_result(x, depth)}"      
 
-            # Recurse on the parent
+      # Recurse on the parent
       render_parents(x, result, depth)
-      
 
     end
     result

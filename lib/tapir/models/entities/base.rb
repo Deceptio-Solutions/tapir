@@ -1,23 +1,21 @@
 module Entities
   class Base
-
     include Mongoid::Document
     include Mongoid::Timestamps
 
     include TenantAndProjectScoped
-
     include EntityHelper
 
     field :age, type: Date
     field :confidence, type: Integer
-    
     field :name, type: String
     field :status, type: String
-  
     field :comment, type: String # Catch-all unstructured data field
 
     validates_uniqueness_of :name, :scope => [:tenant_id,:project_id,:_type]
     
+    has_many :entity_mappings, as: :mappable
+
     def to_s
       "#{entity_type.capitalize}: #{name}"
     end
@@ -33,7 +31,6 @@ module Entities
 
     def all
       entities = []
-
       Entities::Base.unscoped.descendants.each do |x|
         x.all.each {|y| entities << y } unless x.all == [] 
       end
@@ -43,10 +40,6 @@ module Entities
 
     def task_runs
       TaskRun.where(:task_entity_id => id).all
-    end
-
-    def parent_task_runs
-      EntityMapping.where(:child_id => id).map{ |e| TaskRun.find e.task_run_id }
     end
 
     def model_name

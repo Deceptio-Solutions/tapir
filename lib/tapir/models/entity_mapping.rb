@@ -1,10 +1,10 @@
 class EntityMapping
   include Mongoid::Document
   include Mongoid::Timestamps
-      
   include TenantAndProjectScoped
 
   belongs_to :task_run
+  belongs_to :mappable, polymorphic: true
 
   field :child_id, type: String
   field :child_type, type: String
@@ -12,8 +12,8 @@ class EntityMapping
   field :parent_type, type: String
   field :task_run_id, type: String
 
-  index({ child_id: 1, child_type: 1 }, { unique: true })
-  index({ parent_id: 1, parent_type: 1 }, { unique: true })
+  #index({ child_id: 1, child_type: 1 }, { unique: true })
+  #index({ parent_id: 1, parent_type: 1 }, { unique: true })
 
   # TODO: INDEX
   def get_child

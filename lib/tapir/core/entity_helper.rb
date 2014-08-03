@@ -31,7 +31,10 @@ module EntityHelper
   #
   def children
     TapirLogger.instance.log "Finding children for #{self}"
-    EntityManager.instance.find_children(self.id, self.class.to_s)
+    children = []
+    self.entity_mappings.each {|x| children << x.get_child if x.child_id }
+    #EntityManager.instance.find_children(self.id, self.class.to_s)
+  children
   end
 
   #
@@ -47,19 +50,24 @@ module EntityHelper
   #
   def parents
     TapirLogger.instance.log "Finding parents for #{self}"
-    EntityManager.instance.find_parents(self.id, self.class.to_s)
+    parents = []
+    self.entity_mappings.each {|x| parents << x.get_parent if x.parent_id }
+    ##EntityManager.instance.find_parents(self.id, self.class.to_s)
+  parents
   end
 
   #
   # This method lets you find all available parents
   #
-  def parent_tasks
+  def parent_task_runs
     TapirLogger.instance.log "Finding task runs for #{self}"
-    EntityManager.instance.find_task_runs(self.id, self.class.to_s)
+    self.parents.map{|x| x.task_runs.where(:child_id => self.id).first }
+    ##EntityManager.instance.find_task_runs(self.id, self.class.to_s)
   end
 
   def task_runs
     TapirLogger.instance.log "Finding task runs for #{self}"
+      self.entity_mappings.parents 
     EntityManager.instance.find_task_runs(self.id, self.class.to_s)
   end
 
@@ -70,9 +78,6 @@ module EntityHelper
     # Pull out the relevant parameters
     new_entity = params[:child]
     task_run = params[:task_run]
-        
-    # And set us up as a parent through an entity_mapping
-    # new_entity._map_parent(params)
     
      # And associate the entity as a child through an entity mapping
     TapirLogger.instance.log "Associating #{self} with child entity #{new_entity}"
@@ -83,12 +88,17 @@ module EntityHelper
     TapirLogger.instance.log "Creating new child mapping #{self} => #{params[:child]}"
 
     # Create a new entity mapping, unless they happen to be the same object (is that possible?)
-    EntityMapping.create(
+    e = EntityMapping.create(
       :parent_id => self.id,
       :parent_type => self.class.to_s,
       :child_id => params[:child].id,
       :child_type => params[:child].class.to_s,
       :task_run_id => params[:task_run].id || nil) unless self.id == params[:child].id
+
+    # Add to the object's mappings
+    self.entity_mappings << e
+
+  e
   end
 
 end

@@ -13,6 +13,7 @@ gem 'tabulous', "~> 1.3.2"
 
 # Mongo Database
 gem "mongoid", "~> 3.0.0"
+gem 'neo4j', :git => "https://github.com/andreasronge/neo4j.git"
 
 # Background tasks
 gem 'mongo-resque', :require => 'resque'

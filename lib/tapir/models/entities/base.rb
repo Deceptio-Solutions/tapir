@@ -3,21 +3,20 @@ module Entities
 
     include Mongoid::Document
     include Mongoid::Timestamps
+    include Neo4j::ActiveNode
 
     include TenantAndProjectScoped
-
     include EntityHelper
 
-    field :age, type: Date
-    field :confidence, type: Integer
-    
-    field :name, type: String
-    field :status, type: String
-  
-    field :comment, type: String # Catch-all unstructured data field
+    property :age, type: Date
+    property :confidence, type: Integer
+    property :name, type: String
+    property :status, type: String
+    property :comment, type: String # Catch-all unstructured data field
 
     validates_uniqueness_of :name, :scope => [:tenant_id,:project_id,:_type]
-    
+    has_many :entity_mappings
+
     def to_s
       "#{entity_type.capitalize}: #{name}"
     end
@@ -46,7 +45,7 @@ module Entities
     end
 
     def parent_task_runs
-      EntityMapping.where(:child_id => id).map{ |e| TaskRun.find e.task_run_id }
+      self.entity_mappings.map{ |e| TaskRun.find e.task_run_id }
     end
 
     def model_name

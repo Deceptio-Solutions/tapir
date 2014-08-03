@@ -1,3 +1,4 @@
+ruby '2.1.2'
 source 'http://rubygems.org'
 
 # Require recent Rails:
@@ -7,12 +8,15 @@ gem 'rails' # Latest gem
 
 # Rails / Database
 gem 'therubyracer'
-gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git', :branch => '2.1-stable'
-gem 'formtastic-bootstrap', :git => 'https://github.com/cgunther/formtastic-bootstrap.git', :branch => 'bootstrap2-rails3-2-formtastic-2-1'
-gem 'tabulous', "~> 1.3.2" 
+gem 'formtastic', :git => 'git://github.com/justinfrench/formtastic.git'
+#gem 'formtastic-bootstrap', :git => 'https://github.com/cgunther/formtastic-bootstrap.git'
+gem 'tabulous' #, "~> 1.3.2" 
 
 # Mongo Database
-gem "mongoid", "~> 3.0.0"
+gem "mongoid" #, "~> 3.0.0"
+
+# Neo4j Database
+gem 'neo4j', github: 'andreasronge/neo4j'
 
 # Background tasks
 gem 'mongo-resque', :require => 'resque'
@@ -21,12 +25,12 @@ gem 'god'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-sass', '~> 2.0.0'
-end
+#group :assets do
+#  gem 'sass-rails' #,   '~> 3.2.3'
+#  gem 'coffee-rails' #, '~> 3.2.1'
+#  gem 'uglifier' #, '>= 1.0.3'
+#  gem 'bootstrap-sass' #, '~> 2.0.0'
+#end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -54,7 +58,7 @@ gem 'devise'
 #  Data manipulation #
 ######################
 gem 'fastercsv'
-gem 'librex'
+#gem 'librex'
 gem 'nmap-parser'
 gem 'json'
 

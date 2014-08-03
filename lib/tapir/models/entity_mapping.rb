@@ -1,11 +1,18 @@
 class EntityMapping
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Neoid::Relationship
       
   include TenantAndProjectScoped
-
   belongs_to :task_run
 
+  neoidable do |c|
+    c.relationship start_node: :entity_mapping, end_node: :entity_mapping, type: :parents
+    c.relationship start_node: :entity_mapping, end_node: :entity_mapping, type: :children
+  end
+ 
+
+=begin
   field :child_id, type: String
   field :child_type, type: String
   field :parent_id, type: String
@@ -41,5 +48,5 @@ class EntityMapping
   def to_s
     "#{self.class}: #{child_type}:#{child_id} <-> #{parent_type}:#{parent_id} - (task_run: #{task_run.id})"
   end 
-
+=end
 end

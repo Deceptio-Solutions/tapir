@@ -61,14 +61,17 @@ module EntityHelper
   #
   def parent_task_runs
     TapirLogger.instance.log "Finding task runs for #{self}"
-    self.parents.map{|x| x.task_runs.where(:child_id => self.id).first }
-    ##EntityManager.instance.find_task_runs(self.id, self.class.to_s)
+    task_runs = []
+    # TODO - make sure this returns task runs
+    #self.parents.each{|x| task_runs << x.task_runs.where(:child_id => self.id).first }
+    #EntityManager.instance.find_task_runs(self.id, self.class.to_s)
+  task_runs
   end
 
   def task_runs
     TapirLogger.instance.log "Finding task runs for #{self}"
-      self.entity_mappings.parents 
-    EntityManager.instance.find_task_runs(self.id, self.class.to_s)
+    #self.task_runs 
+    #EntityManager.instance.find_task_runs(self.id, self.class.to_s)
   end
 
   #

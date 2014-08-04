@@ -163,9 +163,16 @@ class Task
     #
     if current_entity.children.include? new_entity
       @task_logger.log "Skipping association of #{current_entity} and #{new_entity}. It's already a child."
+      
+      # TOTALLY EXPERIMENTAL
+      new_entity.entity_mappings << current_entity
     else
       @task_logger.log "Associating #{current_entity} with #{new_entity} and task run #{@task_run}"
-      current_entity.associate_child({:child => new_entity, :task_run => @task_run}) 
+      current_entity.associate_child({:child => new_entity, :task_run => @task_run})
+     
+      # TOTALLY EXPERIMENTAL
+      current_entity.entity_mappings << new_entity
+      new_entity.entity_mappings << current_entity
     end
     
   new_entity

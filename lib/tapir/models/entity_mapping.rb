@@ -4,7 +4,7 @@ class EntityMapping
   include TenantAndProjectScoped
 
   belongs_to :task_run
-  belongs_to :mappable, polymorphic: true
+  belongs_to :entity_mappable, polymorphic: true
 
   field :child_id, type: String
   field :child_type, type: String
@@ -17,7 +17,7 @@ class EntityMapping
 
   # TODO: INDEX
   def get_child
-    TapirLogger.instance.log "Trying to find #{child_type}:#{child_id}"
+    TapirLogger.instance.log "Trying to find child #{child_type}:#{child_id}"
     begin
       eval "#{child_type}.find(\"#{child_id}\")"
     rescue Mongoid::Errors::DocumentNotFound => e
@@ -29,7 +29,7 @@ class EntityMapping
   
   # TODO: INDEX!!!
   def get_parent
-    TapirLogger.instance.log "Trying to find #{parent_type}:#{parent_id}"
+    TapirLogger.instance.log "Trying to find parent #{parent_type}:#{parent_id}"
     begin
       eval "#{parent_type}.find(\"#{parent_id}\")"
     rescue Mongoid::Errors::DocumentNotFound => e

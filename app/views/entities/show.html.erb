@@ -15,18 +15,18 @@
 </p>
 
 <p>
-<b>Task Runs that found this entity:</b>
+<b>Tasks run on this entity:</b>
   <ul>
-  <% @entity.parent_task_runs.each {|r|%>
+  <% @entity.task_runs.each {|r|%>
     <li><%= link_to r, task_run_path(r)  %></li>
   <% } %>
   </ul>
 </p>
 
 <p>
-<b>Task Runs on this entity:</b>
+<b>Tasks that found this entity:</b>
   <ul>
-  <% @entity.task_runs.each {|r|%>
+  <% @entity.parent_task_runs.each {|r|%>
     <li><%= link_to r, task_run_path(r)  %></li>
   <% } %>
   </ul>

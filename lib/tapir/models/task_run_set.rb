@@ -5,9 +5,6 @@ class TaskRunSet
   include TenantAndProjectScoped
 
   field :num_tasks, type: Integer
-
-  def task_runs
-    TaskRun.where(:task_run_set_id => self.id)
-  end
-
+ 
+  has_many :task_runs
 end

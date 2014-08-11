@@ -4,18 +4,25 @@ class EntityMapping
   include TenantAndProjectScoped
 
   belongs_to :task_run
-  belongs_to :mappable, polymorphic: true
+  belongs_to :connection, polymorphic: true
 
-  field :child_id, type: String
-  field :child_type, type: String
   field :parent_id, type: String
   field :parent_type, type: String
+  field :child_id, type: String
+  field :child_type, type: String
   field :task_run_id, type: String
 
-  #index({ child_id: 1, child_type: 1 }, { unique: true })
-  #index({ parent_id: 1, parent_type: 1 }, { unique: true })
+ # TODO: INDEX!!!
+  def get_task_run
+    begin
+      TaskRun.find(task_run_id)
+    rescue Mongoid::Errors::DocumentNotFound => e
+      TapirLogger.instance.log "Oops, couldn't find #{child_type}:#{child_id}:\n #{e}"
+      nil
+    end
+  end
 
-  # TODO: INDEX
+  # TODO: INDEX!!!
   def get_child
     TapirLogger.instance.log "Trying to find #{child_type}:#{child_id}"
     begin
@@ -23,8 +30,7 @@ class EntityMapping
     rescue Mongoid::Errors::DocumentNotFound => e
       TapirLogger.instance.log "Oops, couldn't find #{child_type}:#{child_id}:\n #{e}"
       nil
-    end
-    
+    end    
   end
   
   # TODO: INDEX!!!
@@ -39,7 +45,7 @@ class EntityMapping
   end
 
   def to_s
-    "#{self.class}: #{child_type}:#{child_id} <-> #{parent_type}:#{parent_id} - (task_run: #{task_run.id})"
+    "#{self.id}: #{parent_type}:#{parent_id} -> #{child_type}:#{child_id} - (#{TaskRun.find task_run.id})"
   end 
 
 end

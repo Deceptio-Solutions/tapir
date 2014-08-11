@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+
+  # Recursively find children
   def render_children(entity, result = "", depth=0)
     # Base case 
     if entity.children.empty?
@@ -18,6 +20,7 @@ module ApplicationHelper
   result 
   end
 
+  # Recursively find parents
   def render_parents(entity, result = "", depth=0)
 
     if entity.parents.empty?

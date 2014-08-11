@@ -19,6 +19,7 @@ end
 def allowed_types
   [ Entities::Account,
     Entities::DnsRecord, 
+    Entities::DnsServer, 
     Entities::DocFile,
     Entities::EmailAddress,
     Entities::FacebookAccount,

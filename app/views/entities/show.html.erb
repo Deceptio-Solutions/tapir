@@ -15,15 +15,6 @@
 </p>
 
 <p>
-<b>Task Runs that found this entity:</b>
-  <ul>
-  <% @entity.parent_task_runs.each {|r|%>
-    <li><%= link_to r, task_run_path(r)  %></li>
-  <% } %>
-  </ul>
-</p>
-
-<p>
 <b>Task Runs on this entity:</b>
   <ul>
   <% @entity.task_runs.each {|r|%>
@@ -31,6 +22,26 @@
   <% } %>
   </ul>
 </p>
+
+<p>
+<b>Task Runs that found this entity:</b>
+  <ul>
+  <% @entity.incoming_task_runs.each {|r|%>
+    <li><%= link_to r, task_run_path(r)  %></li>
+  <% } %>
+  </ul>
+</p>
+
+<p>
+<b>Entity Mappings:</b>
+  <ul>
+  <% @entity.entity_mappings.each {|e|%>
+    <li><%= link_to e, entity_mapping_path(e)  %></li>
+  <% } %>
+  </ul>
+</p>
+
+
 
 <%= link_to "Destroy", entity_path(@entity), :confirm => 'Are you sure?', :method => :delete %>| 
 <%= link_to 'Edit', edit_entity_path(@entity) %> |

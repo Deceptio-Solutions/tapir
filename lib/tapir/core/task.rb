@@ -66,109 +66,21 @@ class Task
   end
 
   #
-  # Override me
-  #
-  def setup(entity, options={})
-    
-    @entity = entity # the entity we're operating on
-    @options = options # the options for this task
-    @results = [] # temporary collection of all created entitys
-
-    # Create a task run for each one of our entitys
-    @task_run = TaskRun.create :task_name => self.name, 
-      :task_entity_id => @entity.id,
-      :task_entity_type => @entity.class.to_s,
-      :task_options_hash => @options
-
-    @task_logger = TaskLogger.new(@task_run.id, self.name, true)
-     
-    #
-    # Do a little logging. Do it for the kids.
-    #
-    @task_logger.log "Setup called."
-    @task_logger.log "Task entity: #{@entity}"
-    @task_logger.log "Task options: #{@options.inspect}"
-  end
-  
-  #
-  # Override me
-  #
-  def run
-    @task_logger.log "Run called." 
-  end
-  
-  #
-  # Override me
-  #
-  def cleanup
-    @task_logger.log "Cleanup called." 
-  end
-  
-  def to_s
-    "#{name}: #{description}"
-  end
-
-  #
   # Convenience Method to execute a system command semi-safely
   #
   #  !!!! Don't send anything to this without first whitelisting user input!!! 
   #
   def safe_system(command)
   
+    ###      ###
+    ### TODO ###
+    ###      ###
+
     if command =~ /(\||\;|\`)/
       raise "Illegal character"
     end
 
     `#{command}`
-  end
-
-  #
-  # Convenience method that makes it easy to create entities from within a task. 
-  # Designed to simplify the task api. Do not override.
-  #
-  # current_entity keeps track of the current entity which we're associating with
-  # params are params for creating the new entity
-  #  new_entity keeps track of the new entity
-  #
-  def create_entity(type, params, current_entity=@entity)
-
-    # Let's sanity check the type first. 
-    unless Entities::Base.descendants.include?(type)
-      raise RuntimeError, "Invalid entity type"
-    end
-
-    #
-    # Call the create method for this type
-    #
-    new_entity = type.send(:create, params) 
-
-    #
-    # Check for dupes & return right away if this doesn't save a new
-    # entity. This should prevent the entity mapping from getting created.
-    #    
-    if new_entity.save
-      @task_logger.good "Created new entity: #{new_entity}"
-    else
-      @task_logger.log "Could not save entity, are you sure it's valid & doesn't already exist?"
-      
-      # Attempt to find the entity
-      new_entity = find_entity(type, params)
-    
-      raise RuntimeError, "Unable to find a valid entity: #{type}, #{params}" unless new_entity
-    end
-
-    #
-    # If we have a new entity, then we should keep track of the information
-    # that created this entity
-    #
-    if current_entity.children.include? new_entity
-      @task_logger.log "Skipping association of #{current_entity} and #{new_entity}. It's already a child."
-    else
-      @task_logger.log "Associating #{current_entity} with #{new_entity} and task run #{@task_run}"
-      current_entity.associate_child({:child => new_entity, :task_run => @task_run}) 
-    end
-    
-  new_entity
   end
 
   #
@@ -224,18 +136,32 @@ class Task
     TapirLogger.instance.log "Options: #{options}"
 
     #
-    # Call the methods to actually do something with the entities that have been passed into this task
+    # Call the methods to do something with the entities that have been passed into this task.
+    #   This also creates the @task_run object which will be used to track this task's results
     #
     self.setup(entity, options)
-    
+
+    #
+    # Associate the entity and the task run
+    #
+    entity.task_runs << @task_run
+    entity.save!
+
     #
     # Keep track of which tasks were run together.
     #
     TapirLogger.instance.log "Associating task run #{@task_run} with set #{task_run_set_id}"
-    @task_run.task_run_set_id = task_run_set_id
+    @task_run.task_run_set = TaskRunSet.find task_run_set_id
     @task_run.save
     
+    #
+    # Do the work
+    #
     self.run
+
+    #
+    # Always mop the floor
+    #
     self.cleanup 
     
     #
@@ -245,4 +171,123 @@ class Task
     @task_run.save
   end
   
+  #
+  # Convenience method that makes it easy to create entities from within a task. 
+  # Designed to simplify the task api. Do not override.
+  #
+  def create_entity(type, params)
+
+    # for readability
+    current_entity = @entity
+
+    # Let's sanity check the type first. 
+    unless Entities::Base.descendants.include?(type)
+      raise RuntimeError, "Invalid entity type"
+    end
+
+    #
+    # Call the create method for this type
+    #
+    new_entity = type.send(:create, params) 
+
+    #
+    # Check for dupes & return right away if this doesn't save a new
+    # entity. This should prevent the entity mapping from getting created.
+    #    
+    if new_entity.save
+      @task_logger.good "Created new entity: #{new_entity}"
+    else
+      @task_logger.log "Could not save entity, are you sure it's valid & doesn't already exist?"
+      
+      # Attempt to find the entity
+      new_entity = find_entity(type, params)
+    
+      raise RuntimeError, "Unable to find a valid entity: #{type}, #{params}" unless new_entity
+    end
+
+    #
+    # If we have a new entity, then we should keep track of the information
+    # that created this entity
+    #
+    if @entity.children.include? new_entity
+      @task_logger.log "Skipping association of #{current_entity} and #{new_entity}. It's already a child."
+    else
+      @task_logger.log "Associating #{current_entity} with #{new_entity} and task run #{@task_run} with entity mappings"
+
+      #
+      # Create a new entity mapping
+      #
+      entity_mapping = EntityMapping.create(
+        :parent_id => current_entity.id,
+        :parent_type => current_entity.class.to_s,
+        :child_id => new_entity.id,
+        :child_type => new_entity.class.to_s,
+        :task_run_id => @task_run.id)
+
+      #
+      # Add to entity mappings on both sides
+      #
+      @task_logger.log "Associating #{current_entity} with child entity #{new_entity} through #{entity_mapping}"
+      current_entity.entity_mappings << entity_mapping
+      current_entity.save
+
+      ## TODO - Oh man. .save! doesnt actually persist the relation. File a mongoid bug.
+
+      @task_logger.log "Associating #{new_entity} with parent entity #{current_entity} through #{entity_mapping}"
+      new_entity.entity_mappings
+      new_entity.save
+    end
+
+  # return our new entity
+  new_entity
+  end
+
+
+  ###
+  ### Overridden by subclasses!
+  ###
+  #
+  # Override me
+  #
+  def setup(entity, options={})
+    
+    @entity = entity # the entity we're operating on
+    @options = options # the options for this task
+    @results = [] # temporary collection of all created entitys
+
+    # Create a task run for each one of our entities
+    @task_run = TaskRun.create :task_name => self.name, 
+      :task_entity_id => @entity.id,
+      :task_entity_type => @entity.class.to_s,
+      :task_options_hash => @options
+
+    @task_logger = TaskLogger.new(@task_run.id, self.name, true)
+     
+    #
+    # Do a little logging. Do it for the kids.
+    #
+    @task_logger.log "Setup called."
+    @task_logger.log "Task entity: #{@entity}"
+    @task_logger.log "Task options: #{@options.inspect}"
+  end
+  
+  #
+  # Override me
+  #
+  def run
+    @task_logger.log "Run called." 
+  end
+  
+  #
+  # Override me
+  #
+  def cleanup
+    @task_logger.log "Cleanup called." 
+  end
+  
+  def to_s
+    "#{name}: #{description}"
+  end
+
+
 end

@@ -9,7 +9,6 @@ class TaskRunner
 
     entity = Entities::Base.find(entity_id)
     entity.run_task(task_name, task_run_set_id, options)
-
   end
 
   def term_timeout(timeout=600)

@@ -98,6 +98,5 @@ class TaskManager
     
     # CURRENTLY NOT THREADED!
     task.execute(entity, options, task_run_set_id)
-    
   end
 end

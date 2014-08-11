@@ -84,6 +84,62 @@ class Task
   end
 
   #
+  # Convenience method that makes it easy to create entities from within a task. 
+  # Designed to simplify the task api. Do not override.
+  #
+  # current_entity keeps track of the current entity which we're associating with
+  # params are params for creating the new entity
+  #  new_entity keeps track of the new entity
+  #
+  def create_entity(type, params, current_entity=@entity)
+
+    # Let's sanity check the type first. 
+    unless Entities::Base.descendants.include?(type)
+      raise RuntimeError, "Invalid entity type"
+    end
+
+    #
+    # Call the create method for this type
+    #
+    new_entity = type.send(:create, params) 
+
+    #
+    # Check for dupes & return right away if this doesn't save a new
+    # entity. This should prevent the entity mapping from getting created.
+    #    
+    if new_entity.save
+      @task_logger.good "Created new entity: #{new_entity}"
+    else
+      @task_logger.log "Could not save entity, are you sure it's valid & doesn't already exist?"
+      
+      # Attempt to find the entity
+      new_entity = find_entity(type, params)
+    
+      raise RuntimeError, "Unable to find a valid entity: #{type}, #{params}" unless new_entity
+    end
+
+    #
+    # If we have a new entity, then we should keep track of the information
+    # that created this entity
+    #
+    if current_entity.children.include? new_entity
+      @task_logger.log "Skipping association of #{current_entity} and #{new_entity}. It's already a child."
+      
+      # TOTALLY EXPERIMENTAL
+      new_entity.entity_mappings << current_entity
+    else
+      @task_logger.log "Associating #{current_entity} with #{new_entity} and task run #{@task_run}"
+      current_entity.associate_child({:child => new_entity, :task_run => @task_run})
+     
+      # TOTALLY EXPERIMENTAL
+      current_entity.entity_mappings << new_entity
+      new_entity.entity_mappings << current_entity
+    end
+    
+  new_entity
+  end
+
+  #
   # This method is used to locate a pre-existing entity before we try to save a new 
   # entity. It is called by create_entity in the Task class. The params entity is a 
   # set of things that will be used to create the entity, so it's generally safe to 

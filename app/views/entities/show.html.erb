@@ -15,7 +15,7 @@
 </p>
 
 <p>
-<b>Task Runs on this entity:</b>
+<b>Tasks run on this entity:</b>
   <ul>
   <% @entity.task_runs.each {|r|%>
     <li><%= link_to r, task_run_path(r)  %></li>

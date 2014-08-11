@@ -24,7 +24,7 @@ class EntityMapping
 
   # TODO: INDEX!!!
   def get_child
-    TapirLogger.instance.log "Trying to find #{child_type}:#{child_id}"
+    TapirLogger.instance.log "Trying to find child #{child_type}:#{child_id}"
     begin
       eval "#{child_type}.find(\"#{child_id}\")"
     rescue Mongoid::Errors::DocumentNotFound => e
@@ -35,7 +35,7 @@ class EntityMapping
   
   # TODO: INDEX!!!
   def get_parent
-    TapirLogger.instance.log "Trying to find #{parent_type}:#{parent_id}"
+    TapirLogger.instance.log "Trying to find parent #{parent_type}:#{parent_id}"
     begin
       eval "#{parent_type}.find(\"#{parent_id}\")"
     rescue Mongoid::Errors::DocumentNotFound => e

@@ -166,9 +166,6 @@ module Entities
       TapirLogger.instance.log "Finding parents for #{self}"
       parents = []
 
-      require 'pry'
-      binding.pry
-
       self.entity_mappings.each {|x| parents << x.get_parent if x.child_id == self.id }
     parents
     end

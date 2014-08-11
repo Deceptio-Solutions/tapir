@@ -53,7 +53,7 @@ def run
   @task_logger.log "scanning #{to_scan} and storing in #{@rand_file_path}"
   @task_logger.log "nmap options: #{nmap_options}"
   
-  nmap_string = "nmap #{to_scan} #{nmap_options} -P0 --top-ports 1000 --min-parallelism 25 -oX #{@rand_file_path}"
+  nmap_string = "nmap #{to_scan} #{nmap_options} -P0 --top-ports 100 --min-parallelism 10 -oX #{@rand_file_path}"
   @task_logger.log "calling nmap: #{nmap_string}"
   safe_system(nmap_string)
     

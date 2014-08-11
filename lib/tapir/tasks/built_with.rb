@@ -17,21 +17,13 @@ end
 
 ## Returns an array of types that are allowed to call this task
 def allowed_types
-  [ Entities::DnsRecord, 
-    Entities::Host, 
-    Entities::WebApplication]
+  [ Entities::WebApplication]
 end
 
 def setup(entity, options={})
   super(entity, options)
-
-  if @entity.kind_of? Entities::Host
-    url = "http://#{@entity.name}"
-  elsif @entity.kind_of? Entities::DnsRecord
-    url = "http://#{@entity.name}"
-  else
-    url = "#{@entity.name}"
-  end
+  
+  url = "#{@entity.name}"
 
   @task_logger.log "Connecting to #{url} for #{@entity}" 
 

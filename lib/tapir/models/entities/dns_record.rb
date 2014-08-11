@@ -27,7 +27,7 @@ module Entities
       :presence => true, 
       :uniqueness => {:scope => [:tenant_id,:project_id]},
       :format => { 
-        :with => Regexp.new(/^[A-Za-z0-9\.\*]+$/),
+        :with => Regexp.new(/^[A-Za-z0-9\.\*\-]+$/),
         :message => "Not a valid hostname"
       }
 

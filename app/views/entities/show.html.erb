@@ -32,15 +32,6 @@
   </ul>
 </p>
 
-<p>
-<b>Entity Mappings:</b>
-  <ul>
-  <% @entity.entity_mappings.each {|e|%>
-    <li><%= link_to e, entity_mapping_path(e)  %></li>
-  <% } %>
-  </ul>
-</p>
-
 
 
 <%= link_to "Destroy", entity_path(@entity), :confirm => 'Are you sure?', :method => :delete %>| 

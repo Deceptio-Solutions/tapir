@@ -63,8 +63,7 @@ class TaskManager
       #
       TapirLogger.instance.log "Evaluating task: #{task_file}"
       t = Task.new
-      t.instance_eval(File.open(task_file, "r").read)
-
+      t.instance_eval(File.open(task_file, "r").read,task_file)
       #
       # Add it to our task listing
       #

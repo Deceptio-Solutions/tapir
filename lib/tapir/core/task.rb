@@ -1,5 +1,8 @@
 class Task
 
+  attr_accessor :task_logger
+  attr_accessor :task_run
+
   # Rails model compatibility #
   def self.all
     TaskManager.instance.create_all_tasks
@@ -20,10 +23,7 @@ class Task
   def self.id
     return self.name
   end
-  # End Rails compatibility #
- 
-  attr_accessor :task_logger
-  attr_accessor :task_run
+  # End Rails compatibility 
 
   def to_json
     { :name => name, :description => description}
@@ -290,7 +290,7 @@ class Task
       ## TODO - Oh man. .save! doesnt actually persist the relation. File a mongoid bug.
 
       @task_logger.log "Associating #{new_entity} with parent entity #{current_entity} through #{entity_mapping}"
-      new_entity.entity_mappings
+      new_entity.entity_mappings << entity_mapping
       new_entity.save
     end
 

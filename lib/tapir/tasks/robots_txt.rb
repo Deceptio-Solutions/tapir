@@ -99,11 +99,18 @@ def run
 
         # This will work for the following types
         # Disallow: /path/
-        # Sitemap: /whatever.xml.gz
-        path = line.split(":").last.chomp
+        # Sitemap: http://site.com/whatever.xml.gz
+        if line =~ /Sitemap/
+          path = line.split(" ").last.strip
+          full_path = "#{path}"
+        elsif line =~ /Disallow/
+          path = line.split(" ").last.strip
+          full_path = "#{@entity.name}#{path}"
+        end
+
 
         # otherwise create a webpate 
-        create_entity Entities::WebPage, { :name => "#{@entity.name}#{path}", :uri => "#{@entity.name}#{path}", :content => "#{content}" }
+        create_entity Entities::WebPage, { :name => full_path, :uri => full_path, :content => "#{content}" }
       end
 
     end

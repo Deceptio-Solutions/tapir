@@ -41,7 +41,7 @@ def do_http_request(url)
     rescue OpenURI::HTTPError => e
       @task_logger.error "HTTPError - Unable to connect to #{url}: #{e}"
     rescue Net::HTTPBadResponse => e
-      @task_logger.error "HTTPBadResponse-  Unable to connect to #{url}: #{e}"
+      @task_logger.error "HTTPBadResponse - Unable to connect to #{url}: #{e}"
     rescue OpenSSL::SSL::SSLError => e
       @task_logger.error "SSLError - Unable to connect to #{url}: #{e}"
     rescue EOFError => e

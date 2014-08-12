@@ -38,8 +38,6 @@ def run
     # Write the range to a path
     @output_path = "#{Dir::tmpdir}/masscan_output_#{rand(100000000)}.temp"
 
-    return unless safe_system("masscan -h") ~= /usage/
-
     # shell out to binary and run the scan
     @task_logger.log "scanning #{@entity.range}" 
     @task_logger.log "masscan options: #{masscan_options}"

@@ -108,7 +108,6 @@ def run
           full_path = "#{@entity.name}#{path}"
         end
 
-
         # otherwise create a webpate 
         create_entity Entities::WebPage, { :name => full_path, :uri => full_path, :content => "#{content}" }
       end

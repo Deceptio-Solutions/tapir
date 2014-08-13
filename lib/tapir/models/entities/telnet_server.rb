@@ -1,5 +1,5 @@
 module Entities
-  class DnsServer < Base
+  class TelnetServer < Base
     include TenantAndProjectScoped
 
     belongs_to :host

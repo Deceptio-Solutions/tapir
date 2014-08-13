@@ -1,5 +1,6 @@
+
 module Entities
-  class DnsServer < Base
+  class SshServer < Base
     include TenantAndProjectScoped
 
     belongs_to :host

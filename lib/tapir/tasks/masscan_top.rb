@@ -57,9 +57,11 @@ def run
       host_string = host_string.delete("\n").strip unless host_string.nil?
       host = host_string.split(" ").last
 
-      proto = "udp"
-      unless port =~ /^U/
-        proto = "tcp" 
+      
+      proto = "tcp"
+      if port =~ /^U/
+        port = port.split(":").last
+        proto = "udp"
       end
 
       # Create entity for each discovered host + service

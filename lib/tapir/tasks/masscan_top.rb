@@ -57,13 +57,18 @@ def run
       host_string = host_string.delete("\n").strip unless host_string.nil?
       host = host_string.split(" ").last
 
+      proto = "udp"
+      unless port =~ /^U/
+        proto = "tcp" 
+      end
+
       # Create entity for each discovered host + service
       @host_entity = create_entity(Entities::Host, {:name => host })
       create_entity(Entities::NetSvc, {
         :name => "#{host}:#{port}/tcp",
         :host_id => @host_entity.id,
         :port_num => port,
-        :proto => "tcp",
+        :proto => proto,
         :fingerprint => "masscanned"})
     end
   end

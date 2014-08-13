@@ -3,7 +3,7 @@ def name
 end
 
 def pretty_name
-  "Convert all NetSvc to the appropriate Server types"
+  "Convert NetSvc to Servers"
 end
 
 def authors
@@ -12,7 +12,7 @@ end
 
 ## Returns a string which describes what this task does
 def description
-  "This task converts a network service into a web application"
+  "Convert all NetSvc to the appropriate Server types"
 end
 
 ## Returns an array of types that are allowed to call this task
@@ -41,12 +41,12 @@ def run
 return @task_logger.error "No associated host :(" unless @entity.host
 
 server_types = [  
-  {:port_num => 21,  :proto => "tcp", :entity_type => Entities::FtpServer, :entity_name => "#{@entity.host.name}" },
-  {:port_num => 22,  :proto => "tcp", :entity_type => Entities::SshServer, :entity_name => "#{@entity.host.name}" },
-  {:port_num => 23,  :proto => "tcp", :entity_type => Entities::TelnetServer, :entity_name => "#{@entity.host.name}" },
-  {:port_num => 53,  :proto => "udp", :entity_type => Entities::DnsServer, :entity_name => "#{@entity.host.name}" }, 
-  {:port_num => 80, :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "http://#{@entity.host.name}" },
-  {:port_num => 443, :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "https://#{@entity.host.name}" },
+  {:port_num => 21,   :proto => "tcp", :entity_type => Entities::FtpServer, :entity_name => "#{@entity.host.name}" },
+  {:port_num => 22,   :proto => "tcp", :entity_type => Entities::SshServer, :entity_name => "#{@entity.host.name}" },
+  {:port_num => 23,   :proto => "tcp", :entity_type => Entities::TelnetServer, :entity_name => "#{@entity.host.name}" },
+  {:port_num => 53,   :proto => "udp", :entity_type => Entities::DnsServer, :entity_name => "#{@entity.host.name}" }, 
+  {:port_num => 80,   :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "http://#{@entity.host.name}" },
+  {:port_num => 443,  :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "https://#{@entity.host.name}" },
   {:port_num => 8080, :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "http://#{@entity.host.name}" },
   {:port_num => 8081, :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "http://#{@entity.host.name}" },
   {:port_num => 8443, :proto => "tcp", :entity_type => Entities::WebApplication, :entity_name => "https://#{@entity.host.name}" }

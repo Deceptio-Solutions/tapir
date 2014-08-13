@@ -37,7 +37,6 @@ module Entities
       Entities::Base.unscoped.descendants.each do |x|
         x.all.each {|y| entities << y } unless x.all == [] 
       end
-      
     entities
     end
     

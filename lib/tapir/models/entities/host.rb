@@ -7,7 +7,6 @@ module Entities
     has_many :dns_records
     
     validates :name, 
-      :presence => true, 
       :uniqueness => {:scope => [:tenant_id,:project_id]},
       :format => { 
         :with => Regexp.union(Resolv::IPv4::Regex, Resolv::IPv6::Regex),

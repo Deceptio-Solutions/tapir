@@ -18,7 +18,6 @@ module Entities
     has_many :entity_mappings, as: :connection, :autosave => true
     has_many :task_runs, as: :completed_tasks
 
-
     def to_s
       "#{entity_type.capitalize}: #{name}"
     end

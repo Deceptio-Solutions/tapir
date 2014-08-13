@@ -24,7 +24,6 @@ module Entities
 
     # Make sure to allow for wildcards names! :)
     validates :name, 
-      :presence => true, 
       :uniqueness => {:scope => [:tenant_id,:project_id]},
       :format => { 
         :with => Regexp.new(/^[A-Za-z0-9\.\*\-]+$/),

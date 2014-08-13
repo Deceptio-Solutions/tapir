@@ -54,7 +54,7 @@ class EntitiesController < ApplicationController
 
     # interpret the type based on the user's input. 
     type = params[:type]
-    
+
     # TODO - there has to be a better way to do this
     render action: "new", notice: "invalid entity type." unless get_valid_type_class_names.include?(type)
 
@@ -107,9 +107,6 @@ class EntitiesController < ApplicationController
       format.json { head :ok }
     end
   end
-
-
-
   
   # Return the valid entity types
   def get_valid_type_class_names

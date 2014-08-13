@@ -1,14 +1,14 @@
 def name
-  "masscan_web"
+  "masscan_top"
 end
 
 def pretty_name
-  "Mass Scan Web Ports"
+  "Mass Scan Top Ports"
 end
 
 ## Returns a string which describes what this task does
 def description
-  "This task runs a masscan scan for web ports on the target range."
+  "This task runs a masscan scan for the top ports on the target range."
 end
 
 ## Returns an array of types that are allowed to call this task
@@ -32,7 +32,10 @@ def run
   # Grab options
   masscan_options = @options['masscan_options']
  
-  ports = @options['masscan_ports'] || [80,443,8080,8081,8443]
+  ports = [ "U:162","U:49152","U:514","U:4500","25","U:1900","U:520",
+            "U:500","22","U:139","21","443","U:53","23",
+            "U:67","U:135","U:445","U:1434","U:123","U:137",
+            "U:161","U:631","80","U:111","3389","U:4500"]
  
   ports.each do |port|
     # Write the range to a path

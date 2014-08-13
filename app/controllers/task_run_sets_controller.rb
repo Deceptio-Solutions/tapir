@@ -17,7 +17,7 @@ class TaskRunSetsController < ApplicationController
          if task_run_set.task_runs.count > 0
            task_run_name = "#{task_run_set.task_runs.map{|t| t.task_name}.uniq.join(" ")}"
          else
-           task_run_name = "*pending*"
+           task_run_name = "* pending *"
          end
 
          [

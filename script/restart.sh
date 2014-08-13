@@ -12,7 +12,7 @@ bundle exec thin start -e production -s3 --socket /tmp/thin.sock
 
 # background task processingi
 echo "killing background workers"
-rvmsudo bundle exec god terminatei
+rvmsudo bundle exec god terminate
 echo "starting background workers"
 rvmsudo bundle exec god -c god_config
 

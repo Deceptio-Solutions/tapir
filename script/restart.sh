@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export RAILS_ENV=production
+TAPIR_ENV=development
 
 # restart thin
 echo "killing thin appserver"
@@ -12,12 +12,12 @@ kill -9 `cat /home/jcran/tapir/tmp/pids/thin.2.pid`
 
 #application serveri
 echo "starting appserver"
-bundle exec thin start -e production -s3 --socket /tmp/thin.sock
+RAILS_ENV=$TAPIR_ENV bundle exec thin start -e development -s3 --socket /tmp/thin.sock
 
 # background task processingi
 echo "killing background workers"
-RAILS_ENV=production rvmsudo bundle exec god terminate
+RAILS_ENV=$TAPIR_ENV rvmsudo bundle exec god terminate
 echo "starting background workers"
-RAILS_ENV=production rvmsudo bundle exec god -c god_config
+RAILS_ENV=$TAPIR_ENV rvmsudo bundle exec god -c god_config
 
 echo "done"

@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
 
         # Create an initial search string
         e = Entities::SearchString.create(:name => @project.name)
-        e.run_task("google_search", {})
+        #e.run_task("google_search", TaskRunSet.new(), {})
 
         # Let the user know
         flash[:notice] = "Project created and activated!"

@@ -44,8 +44,8 @@ class ProjectsController < ApplicationController
   # POST /projects
   def create
 
-    @project = Project.new({
-        :tenant => Tenant.current}.merge(params[:project]))
+    @project = Project.new(
+    {:tenant => Tenant.current}.merge(params[:project]))
 
     respond_to do |format|
       if @project.save
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
 
         # Create an initial search string
         e = Entities::SearchString.create(:name => @project.name)
-        #e.run_task("google_search")
+        e.run_task("google_search")
 
         # Let the user know
         flash[:notice] = "Project created and activated!"

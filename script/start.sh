@@ -2,9 +2,9 @@
 
 export RAILS_ENV=production
 
-# background task processing
-bundle exec god -c god_config
-
 #application server
-bundle exec thin start -e production -s6 --socket /tmp/thin.sock
+bundle exec thin start -e production -s3 --socket /tmp/thin.sock
+
+# background task processing
+rvmsudo bundle exec god -c god_config
 

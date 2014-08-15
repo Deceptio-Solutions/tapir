@@ -12,7 +12,7 @@ gem 'formtastic-bootstrap', :git => 'https://github.com/cgunther/formtastic-boot
 gem 'tabulous', "~> 1.3.2" 
 
 # Mongo Database
-gem "mongoid", "~> 3.0.0"
+gem "mongoid"
 
 # Background tasks
 gem 'mongo-resque', :require => 'resque'

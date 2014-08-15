@@ -8,7 +8,7 @@ for x  in `pgrep -l -f thin| cut -d ' ' -f 1`;do kill -9 $x;done
 
 #application serveri
 echo "starting appserver"
-RAILS_ENV=$TAPIR_ENV bundle exec thin start -e development -s3 --socket /tmp/thin.sock
+RAILS_ENV=$TAPIR_ENV bundle exec thin start -e $TAPIR_ENV -s3 --socket /tmp/thin.sock
 
 # background task processingi
 echo "killing background workers"

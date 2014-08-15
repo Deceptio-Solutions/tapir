@@ -350,7 +350,7 @@ DEPENDENCIES
   linkedin
   mechanize
   mongo-resque
-  mongoid (~> 3.0.0)
+  mongoid
   net-dns
   nmap-parser
   nokogiri

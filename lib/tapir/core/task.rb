@@ -158,11 +158,7 @@ class Task
   #
   def find_entity(type, params)
 
-    if type == Entities::NetBlock
-      return Entities::NetBlock.where({
-        :range => params[:range]}).first
-
-    elsif type == Entities::ParsableFile
+    if type == Entities::ParsableFile
       return Entities::ParsableFile.where({
         :path => params[:path]}).first
 
@@ -170,6 +166,7 @@ class Task
       return Entities::PhysicalLocation.where({
         :latitude => params[:latitude], 
         :longitude => params[:longitude]}).first
+      
     else
       if params.has_key? :name
         return type.send(:where, :name => params[:name]).first

@@ -22,7 +22,8 @@ body {
 }
 
 a:link {text-decoration:underline;}
-
+a.brand:link {text-decoration:none;}
+a {color:black;}
 
 .styled-select select {
    background: transparent;

@@ -49,3 +49,8 @@ config.assets.enabled = true
 config.assets.version = '1.0'
 
 end
+
+# http://makandracards.com/makandra/9549-rack-dies-when-parsing-large-forms
+if Rack::Utils.respond_to?("key_space_limit=")
+  Rack::Utils.key_space_limit = 262144 # 4 times the default size
+end

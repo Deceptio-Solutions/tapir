@@ -26,7 +26,19 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    
+    if params[:type]
+      candidate_type = "#{params[:type]}"
+      # first check to see if we've got a valid type name
+      candidate_type = "Base" unless _get_valid_type_class_names.include? candidate_type
+      # and then set the appropriate type
+    else
+      # otherwise default
+      candidate_type = "Base"
+    end
+
     @task = Task.find(params[:id])
+    @entities = @task.candidates(candidate_type)
 
     respond_to do |format|
       format.html # show.html.erb

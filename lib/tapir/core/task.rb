@@ -29,9 +29,10 @@ class Task
     { :name => name, :description => description}
   end
 
-  def candidates
+  def candidates(type="Base")
     candidate_list = []
-    Entities::Base.all.each do |entity| 
+
+    eval("Entities::#{type}").all.each do |entity| 
       candidate_list << entity if self.allowed_types.include? entity.class
     end
   candidate_list

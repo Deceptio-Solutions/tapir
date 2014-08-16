@@ -15,7 +15,7 @@
   <%=token_tag form_authenticity_token %>
   <input type="hidden" name="task_name" id="task_name" value="<%=@task.name%>"><br/>
   <input type="checkbox" name="Toggle" value="Toggle" onClick="check(document.task_runner)"><br/>
-  <% @task.candidates.each do |entity| %>
+  <% @entities.each do |entity| %>
     <input id="/entities/<%=entity.id%>" type="checkbox" name="entities[<%="#{entity._type}##{entity.id}"%>]" /><%= "#{entity}" %><br/>
   <% end %>
   <input id="submit" type="submit" /><br/>

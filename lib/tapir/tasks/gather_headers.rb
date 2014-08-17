@@ -34,20 +34,25 @@ def http_fetch(uri_str,limit = 10)
     begin
       raise ArgumentError, 'HTTP redirect too deep' if limit == 0
       
-      url = URI.parse(uri_str)
-      http = Net::HTTP.new(url.host, url.port)
-      http.read_timeout = 1000
-      http.use_ssl = (url.scheme == 'https')
-      request = Net::HTTP::Get.new(uri_str)
-      response = http.start {|http| http.request(request) }
-      
-      case response
-        when Net::HTTPSuccess
-          return response
-        when Net::HTTPRedirection
-          http_fetch(response['location'], limit - 1)
-      end
+      Timeout.timeout(20) do
 
+        url = URI.parse(uri_str)
+        http = Net::HTTP.new(url.host, url.port)
+        http.read_timeout = 1000
+        http.use_ssl = (url.scheme == 'https')
+        request = Net::HTTP::Get.new(uri_str)
+        response = http.start {|http| http.request(request) }
+        
+        case response
+          when Net::HTTPSuccess
+            return response
+          when Net::HTTPRedirection
+            http_fetch(response['location'], limit - 1)
+        end
+      end
+      
+    rescue Timeout::Error
+      @task_logger.log "Timed out"
     rescue Errno::ECONNREFUSED
       @task_logger.log "unable to connect"
     rescue OpenSSL::SSL::SSLError

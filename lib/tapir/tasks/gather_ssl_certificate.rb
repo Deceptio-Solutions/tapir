@@ -41,7 +41,7 @@ def run
   port = 443
 
   begin
-    Timeout.timeout(10) do
+    Timeout.timeout(20) do
       # Create a socket and connect
       tcp_client = TCPSocket.new hostname, port
       ssl_client = OpenSSL::SSL::SSLSocket.new tcp_client

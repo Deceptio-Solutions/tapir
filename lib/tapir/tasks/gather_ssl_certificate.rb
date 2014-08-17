@@ -35,13 +35,14 @@ end
 ## Default method, subclasses must override this
 def run
   super
-
-  # if it's a web application
+  
   hostname = @entity.host.name
+  #port = "#{@entity.name.split(":").last}" || 443
+  port = 443
 
   begin
     # Create a socket and connect
-    tcp_client = TCPSocket.new hostname, 443
+    tcp_client = TCPSocket.new hostname, port
     ssl_client = OpenSSL::SSL::SSLSocket.new tcp_client
     
     # Grab the cert

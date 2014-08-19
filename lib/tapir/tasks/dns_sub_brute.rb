@@ -25,6 +25,13 @@ end
 ## Returns an array of valid options and their description/type for this task
 def allowed_options
  []
+
+ # :subdomain_list => list of subdomains to brute
+ # :mashed_domains => try domain names w/o a dot, see if anyone's hijacked a common "subdomain"
+ # :mashed_domains - blatently stolen from @hdmoore's webinar on password stealing, try without a dot to see
+ #                   if this domain has been hijacked by someone - great for finding phishing attempts
+ 
+
 end
 
 def setup(entity, options={})
@@ -37,9 +44,15 @@ end
   def run
     super
 
-    # :subdomain_list => list of subdomains to brute
-    # :mashed_domains => try domain names w/o a dot, see if anyone's hijacked a common "subdomain"
+    # Set the dns_record to the appropriate suffix
+    dns_record = @entity.name
 
+    # Handle cases of *.test.com (pretty common when grabbing
+    # DNSRecords from SSLCertificates)
+    if dns_record[0..1] == "*."
+      dns_record = dns_record[2..-1]
+    end
+    
     if @options[:subdomain_list]
       subdomain_list = @options['subdomain_list']
     else
@@ -54,13 +67,10 @@ end
 
     @task_logger.good "Using subdomain list: #{subdomain_list}"
 
-    result_list = []
-    
-
     begin
       # Check for wildcard DNS, modify behavior appropriately. (Only create entities
       # when we know there's a new host associated)
-      if Resolv.new.getaddress("noforkingway#{rand(100000)}.#{@entity.name}")
+      if Resolv.new.getaddress("noforkingway#{rand(100000)}.#{dns_record}")
         wildcard_domain = true 
         @task_logger.error "WARNING! Wildcard domain detected, only saving validated domains/hosts."
       end
@@ -73,19 +83,18 @@ end
       begin
         # Calculate the domain name
         if @options[:mashed_domains]
-        
           # blatently stolen from HDM's webinar on password stealing, try without a dot to see
           # if this domain has been hijacked by someone - great for finding phishing attempts
-          domain = "#{sub}#{@entity.name}"
+          domain = "#{sub}#{dns_record}"
         else  
-          domain = "#{sub}.#{@entity.name}"
+          domain = "#{sub}.#{dns_record}"
         end
 
         # Try to resolve
         resolved_address = Resolv.new.getaddress(domain)
         @task_logger.good "Resolved Address #{resolved_address} for #{domain}" if resolved_address
         
-        # If we resolved, create the right entitys
+        # If we resolved, create the right entities
         if resolved_address
           unless wildcard_domain
             @task_logger.good "Creating domain and host entities..."

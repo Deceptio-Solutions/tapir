@@ -50,6 +50,8 @@ def run
     #
     # Create the host / loc / domain entity for each host we know about
     #
+    @task_logger.log "Creating #{host}"
+    
     d = create_entity(Entities::DnsRecord, { :name => host.hostnames }) if host.hostnames.kind_of? String
     h = create_entity(Entities::Host, {:name => host.ip_address })
     p = create_entity(Entities::PhysicalLocation, {:city => host.city, :country => host.country})

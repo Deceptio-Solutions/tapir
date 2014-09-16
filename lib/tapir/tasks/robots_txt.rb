@@ -31,40 +31,6 @@ def setup(entity, options={})
   super(entity, options)
 end
 
-def do_http_request(url)
-  begin
-
-    # Prevent encoding errors
-    content = open("#{url}", :allow_redirections => :safe).read.force_encoding('UTF-8')
-
-    # Lots and lots of things to go wrong... wah wah.
-    rescue OpenURI::HTTPError => e
-      @task_logger.error "HTTPError - Unable to connect to #{url}: #{e}"
-    rescue Net::HTTPBadResponse => e
-      @task_logger.error "HTTPBadResponse - Unable to connect to #{url}: #{e}"
-    rescue OpenSSL::SSL::SSLError => e
-      @task_logger.error "SSLError - Unable to connect to #{url}: #{e}"
-    rescue EOFError => e
-      @task_logger.error "EOFError - Unable to connect to #{url}: #{e}"
-    rescue SocketError => e
-      @task_logger.error "SocketError - Unable to connect to #{url}: #{e}"
-    rescue RuntimeError => e
-      @task_logger.error "RuntimeError - Unable to connect to #{url}: #{e}"
-    rescue SystemCallError => e
-      @task_logger.error "SystemCallError - Unable to connect to #{url}: #{e}"
-    rescue ArgumentError => e
-      @task_logger.error "Argument Error - #{e}"
-    rescue URI::InvalidURIError => e
-      @task_logger.error "InvalidURIError - #{url} #{e}"
-    rescue Encoding::InvalidByteSequenceError => e
-      @task_logger.error "InvalidByteSequenceError - #{e}"
-    rescue Encoding::UndefinedConversionError => e
-      @task_logger.error "UndefinedConversionError - {e}"
-    end
-
-content || ""
-end
-
 
 ## Default method, subclasses must override this
 def run
@@ -81,10 +47,10 @@ def run
     # Grab a known-missing page so we can make sure it's not a 
     # 404 disguised as a 200
     test_url = "#{@entity.name}/there-is-no-way-this-exists-#{rand(10000)}"
-    missing_page_content = do_http_request(test_url)
+    missing_page_content = open_uri_and_return_content(test_url)
 
     # Do the request
-    content = do_http_request(url)
+    content = open_uri_and_return_content(url)
 
     # Check to make sure this is a legit page, and create an entity if so
     # TODO - improve the checking for wildcard page returns and 404-200's

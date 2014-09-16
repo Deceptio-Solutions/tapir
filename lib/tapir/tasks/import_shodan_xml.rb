@@ -40,13 +40,15 @@ def run
     text = open_uri_and_return_content(@entity.uri,@task_logger)
   end
   
-  @task_logger.log "Parsing #{text}"
+  #@task_logger.log "Parsing #{text}"
 
   # Create our parser
   hosts = []
   shodan_xml = Import::ShodanXml.new(hosts)
   parser = Nokogiri::XML::SAX::Parser.new(shodan_xml)
   parser.parse(text)
+
+  @task_logger.log "Parsing hosts: #{hosts}"
   
   hosts.each do |host|
     

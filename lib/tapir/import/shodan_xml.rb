@@ -32,15 +32,12 @@ class ShodanXml < Nokogiri::XML::SAX::Document
       # create a host entity & set the vars
       #
       current_host = ShodanHost.new
-      current_host.city = @attrs[0].last
-      current_host.country = @attrs[1].last
-      current_host.hostnames = @attrs[2].last
-      current_host.ip_address = @attrs[3].last
-      current_port = @attrs[4].last
-      current_host.updated = @attrs[5].last
-
-      #require 'pry'
-      #binding.pry
+      current_host.city = @attrs[0].last if @attrs[0]
+      current_host.country = @attrs[1].last if @attrs[1]
+      current_host.hostnames = @attrs[2].last if @attrs[2]
+      current_host.ip_address = @attrs[3].last if @attrs[3]
+      current_port = @attrs[4].last if @attrs[4]
+      current_host.updated = @attrs[5].last if @attrs[5]
 
       @hosts << current_host
     end

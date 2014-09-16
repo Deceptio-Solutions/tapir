@@ -52,7 +52,7 @@ def run
     #
     d = create_entity(Entities::DnsRecord, {:name => host.hostnames }) if host.hostnames.kind_of? String
     
-    h = create_entity(Entities::Host, {:name => host.ip_address })
+    h = create_entity(Entities::Host, {:name => host.name })
     # TODO - associate the child here
     #d.associate_child(h)
     

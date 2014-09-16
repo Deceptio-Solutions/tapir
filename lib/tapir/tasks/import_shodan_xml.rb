@@ -37,7 +37,7 @@ def run
   if @entity.kind_of? Entities::ParsableText
     text = @entity.text
   else #ParsableFile
-    text = open_uri_and_return_content(@entity.url,@task_logger)
+    text = open_uri_and_return_content(@entity.uri,@task_logger)
   end
   
   # Create our parser

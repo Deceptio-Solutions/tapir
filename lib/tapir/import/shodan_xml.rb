@@ -3,7 +3,7 @@
 # <data>
 #   Lantronix MSS1 Version STI3.5/5(981103)
 #   Type HELP at the 'Local_2&gt; ' prompt for assistance.
-#   Login password&gt; 
+#   Login password&gt; `
 #  </data>
 #</host>
 #
@@ -70,13 +70,13 @@ class ShodanXml < Nokogiri::XML::SAX::Document
 end
 
 class ShodanHost
-    attr_accessor :city, :country, :hostnames, :ip_address, :services, :updated
-    def initialize(city=nil, country=nil, hostnames=[], ip_address=nil, services=[], updated=nil)
+    attr_accessor :city, :country, :hostname, :ip_address, :port, :updated
+    def initialize(city=nil, country=nil, hostname=[], ip_address=nil, port=[], updated=nil)
       @city = city
       @country = country
-      @hostnames = hostnames
+      @hostname = hostname
       @ip_address = ip_address
-      @services = services
+      @port = port
       @updated = updated
     end
 end

@@ -57,20 +57,9 @@ def run
     #
     @task_logger.log "Creating #{host}"
     
-    #d = create_entity(Entities::DnsRecord, { :name => host.hostnames }) if host.hostnames.kind_of? String
+    #d = create_entity(Entities::DnsRecord, { :name => host.hostname }) if host.hostname.kind_of? String
     h = create_entity(Entities::Host, {:name => host.ip_address })
     #p = create_entity(Entities::PhysicalLocation, {:city => host.city, :country => host.country})
-
-    #host.services.each do |shodan_service|
-    #  #
-    #  # Create the service and associate it with our host above
-    #  #
-    #create_entity(Entities::NetSvc, {
-    # :port_num => shodan_service.port,
-    # :type => "tcp",
-    # :fingerprint => shodan_service.data })
-    #
-    #end # End services processing
 
   end # End host processing
   

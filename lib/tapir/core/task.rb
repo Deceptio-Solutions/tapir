@@ -95,23 +95,23 @@ class Task
 
     # Lots and lots of things to go wrong... wah wah.
     rescue OpenURI::HTTPError => e
-      logger.error "HTTPError - Unable to connect to #{url}: #{e}"
+      logger.error "HTTPError - Unable to connect to #{uri}: #{e}"
     rescue Net::HTTPBadResponse => e
-      logger.error "HTTPBadResponse-  Unable to connect to #{url}: #{e}"
+      logger.error "HTTPBadResponse-  Unable to connect to #{uri}: #{e}"
     rescue OpenSSL::SSL::SSLError => e
-      logger.error "SSLError - Unable to connect to #{url}: #{e}"
+      logger.error "SSLError - Unable to connect to #{uri}: #{e}"
     rescue EOFError => e
-      logger.error "EOFError - Unable to connect to #{url}: #{e}"
+      logger.error "EOFError - Unable to connect to #{uri}: #{e}"
     rescue SocketError => e
-      logger.error "SocketError - Unable to connect to #{url}: #{e}"
+      logger.error "SocketError - Unable to connect to #{uri}: #{e}"
     rescue RuntimeError => e
-      logger.error "RuntimeError - Unable to connect to #{url}: #{e}"
+      logger.error "RuntimeError - Unable to connect to #{uri}: #{e}"
     rescue SystemCallError => e
-      logger.error "SystemCallError - Unable to connect to #{url}: #{e}"
+      logger.error "SystemCallError - Unable to connect to #{uri}: #{e}"
     rescue ArgumentError => e
       logger.error "Argument Error - #{e}"
     rescue URI::InvalidURIError => e
-      logger.error "InvalidURIError - #{url} #{e}"
+      logger.error "InvalidURIError - #{uri} #{e}"
     rescue Encoding::InvalidByteSequenceError => e
       logger.error "InvalidByteSequenceError - #{e}"
     rescue Encoding::UndefinedConversionError => e

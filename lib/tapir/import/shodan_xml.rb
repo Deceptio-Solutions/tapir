@@ -36,7 +36,7 @@ class ShodanXml < Nokogiri::XML::SAX::Document
         current_host.city = attr.last if attr.first == "city"
         current_host.country = attr.last if attr.first == "country"
         current_host.ip_address = attr.last if attr.first == "ip"
-        current_host.hostnames = attr.last if attr.first == "hostnames"
+        current_host.hostname = attr.last if attr.first == "hostnames"
         current_host.port = attr.last if attr.first == "port"
         current_host.updated = attr.last if attr.first == "city"
       end

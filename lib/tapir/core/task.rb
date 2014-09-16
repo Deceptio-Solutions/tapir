@@ -85,6 +85,42 @@ class Task
   end
 
   #
+  # Convenience method to open a URI
+  #
+  def open_uri_and_return_content(uri,logger)
+    begin
+
+      # Prevent encoding errors
+      content = open("#{uri}", :allow_redirections => :safe).read.force_encoding('UTF-8')
+
+    # Lots and lots of things to go wrong... wah wah.
+    rescue OpenURI::HTTPError => e
+      logger.error "HTTPError - Unable to connect to #{url}: #{e}"
+    rescue Net::HTTPBadResponse => e
+      logger.error "HTTPBadResponse-  Unable to connect to #{url}: #{e}"
+    rescue OpenSSL::SSL::SSLError => e
+      logger.error "SSLError - Unable to connect to #{url}: #{e}"
+    rescue EOFError => e
+      logger.error "EOFError - Unable to connect to #{url}: #{e}"
+    rescue SocketError => e
+      logger.error "SocketError - Unable to connect to #{url}: #{e}"
+    rescue RuntimeError => e
+      logger.error "RuntimeError - Unable to connect to #{url}: #{e}"
+    rescue SystemCallError => e
+      logger.error "SystemCallError - Unable to connect to #{url}: #{e}"
+    rescue ArgumentError => e
+      logger.error "Argument Error - #{e}"
+    rescue URI::InvalidURIError => e
+      logger.error "InvalidURIError - #{url} #{e}"
+    rescue Encoding::InvalidByteSequenceError => e
+      logger.error "InvalidByteSequenceError - #{e}"
+    rescue Encoding::UndefinedConversionError => e
+      logger.error "UndefinedConversionError - {e}"
+    end
+  content
+  end
+
+  #
   # Convenience method that makes it easy to create entities from within a task. 
   # Designed to simplify the task api. Do not override.
   #

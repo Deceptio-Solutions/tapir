@@ -37,7 +37,7 @@ def run
   if @entity.kind_of? Entities::ParsableText
     text = @entity.text
   else #ParsableFile
-    text = open(@entity.uri).read
+    text = open_uri_and_return_content(@entity.url,@task_logger)
   end
   
   # Create our parser
@@ -50,24 +50,18 @@ def run
     #
     # Create the host / loc / domain entity for each host we know about
     #
-    d = create_entity(Entities::DnsRecord, {:name => host.hostnames }) if host.hostnames.kind_of? String
-    
+    d = create_entity(Entities::DnsRecord, { :name => host.hostnames }) if host.hostnames.kind_of? String
     h = create_entity(Entities::Host, {:name => host.name })
-    # TODO - associate the child here
-    #d.associate_child(h)
-    
     p = create_entity(Entities::PhysicalLocation, {:city => host.city, :country => host.country})
-    # TODO - associate the child here
-    #h.associate_child(p)
 
     #host.services.each do |shodan_service|
     #  #
     #  # Create the service and associate it with our host above
     #  #
-    #  create_entity(Entities::NetSvc, {
-    #    :port_num => shodan_service.port,
-    #    :type => "tcp",
-    #    :fingerprint => shodan_service.data })
+    #create_entity(Entities::NetSvc, {
+    # :port_num => shodan_service.port,
+    # :type => "tcp",
+    # :fingerprint => shodan_service.data })
     #
     #end # End services processing
 

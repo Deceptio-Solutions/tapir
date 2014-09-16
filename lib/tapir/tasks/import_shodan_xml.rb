@@ -57,9 +57,9 @@ def run
     #
     @task_logger.log "Creating #{host}"
     
-    d = create_entity(Entities::DnsRecord, { :name => host.hostnames }) if host.hostnames.kind_of? String
+    #d = create_entity(Entities::DnsRecord, { :name => host.hostnames }) if host.hostnames.kind_of? String
     h = create_entity(Entities::Host, {:name => host.ip_address })
-    p = create_entity(Entities::PhysicalLocation, {:city => host.city, :country => host.country})
+    #p = create_entity(Entities::PhysicalLocation, {:city => host.city, :country => host.country})
 
     #host.services.each do |shodan_service|
     #  #

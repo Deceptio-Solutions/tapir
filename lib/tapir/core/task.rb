@@ -117,6 +117,7 @@ class Task
     rescue Encoding::UndefinedConversionError => e
       logger.error "UndefinedConversionError - {e}"
     end
+    
   content
   end
 

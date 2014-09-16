@@ -40,6 +40,8 @@ def run
     text = open_uri_and_return_content(@entity.uri,@task_logger)
   end
   
+  @task_logger.log "Parsing #{text}"
+
   # Create our parser
   hosts = []
   shodan_xml = Import::ShodanXml.new(hosts)
@@ -47,8 +49,9 @@ def run
   parser.parse(text)
   
   hosts.each do |host|
+    
     #
-    # Create the host / loc / domain entity for each host we know about
+    # Create the entity for each host we know about
     #
     @task_logger.log "Creating #{host}"
     

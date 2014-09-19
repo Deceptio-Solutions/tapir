@@ -67,7 +67,7 @@ module Entities
       
       TapirLogger.instance.log "Finding children for #{self}"
       children = []
-      self.entity_mappings.each do |mapping| 
+      EntityMapping.all.each do |mapping| 
 
         # Go through each associated entity mapping, and find mappings where the parent_id is us
         # which means that the child_id is some other entity, and it's a child

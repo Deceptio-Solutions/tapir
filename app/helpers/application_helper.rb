@@ -8,7 +8,7 @@ module ApplicationHelper
     if entity.children.empty?
       # Base case - Close up the upper-lists
       return result
-    elsif depth > 0
+    elsif depth > 1
       return result
     else
       depth = depth + 1
@@ -30,7 +30,7 @@ module ApplicationHelper
     if entity.parents.empty?
       # Base case - Close up the upper-lists
       return result
-    elsif depth > 0
+    elsif depth > 1
       return result
     else
       depth = depth + 1

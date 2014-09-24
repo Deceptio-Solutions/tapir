@@ -3,7 +3,7 @@
 # <data>
 #   Lantronix MSS1 Version STI3.5/5(981103)
 #   Type HELP at the 'Local_2&gt; ' prompt for assistance.
-#   Login password&gt; `
+#   Login password&gt; 
 #  </data>
 #</host>
 #
@@ -32,15 +32,13 @@ class ShodanXml < Nokogiri::XML::SAX::Document
       # create a host entity & set the vars
       #
       current_host = ShodanHost.new
-      @attrs.each do |attr|
-        current_host.city = attr.last if attr.first == "city"
-        current_host.country = attr.last if attr.first == "country"
-        current_host.ip_address = attr.last if attr.first == "ip"
-        current_host.hostname = attr.last if attr.first == "hostnames"
-        current_host.port = attr.last if attr.first == "port"
-        current_host.updated = attr.last if attr.first == "city"
-      end
-      
+      current_host.city = @attrs[0].last if @attrs[0]
+      current_host.country = @attrs[1].last if @attrs[1]
+      current_host.hostnames = @attrs[2].last if @attrs[2]
+      current_host.ip_address = @attrs[3].last if @attrs[3]
+      current_port = @attrs[4].last if @attrs[4]
+      current_host.updated = @attrs[5].last if @attrs[5]
+
       @hosts << current_host
     end
   
@@ -70,13 +68,13 @@ class ShodanXml < Nokogiri::XML::SAX::Document
 end
 
 class ShodanHost
-    attr_accessor :city, :country, :hostname, :ip_address, :port, :updated
-    def initialize(city=nil, country=nil, hostname=[], ip_address=nil, port=[], updated=nil)
+    attr_accessor :city, :country, :hostnames, :ip_address, :services, :updated
+    def initialize(city=nil, country=nil, hostnames=[], ip_address=nil, services=[], updated=nil)
       @city = city
       @country = country
-      @hostname = hostname
+      @hostnames = hostnames
       @ip_address = ip_address
-      @port = port
+      @services = services
       @updated = updated
     end
 end

@@ -11,6 +11,8 @@
 //= require dataTables/extras/TableTools
 //= require dataTables/extras/ZeroClipboard
 //= require_tree .
+//= require fusioncharts/fusioncharts
+//= require fusioncharts/themes/fusioncharts.theme.fint
 
 /* Function to toggle checkboxes */
 function check(field) {

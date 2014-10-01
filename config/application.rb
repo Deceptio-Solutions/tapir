@@ -52,5 +52,5 @@ end
 
 # http://makandracards.com/makandra/9549-rack-dies-when-parsing-large-forms
 if Rack::Utils.respond_to?("key_space_limit=")
-  Rack::Utils.key_space_limit = 262144 # 4 times the default size
+  Rack::Utils.key_space_limit = 2621440 # 40 times the default size
 end

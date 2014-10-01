@@ -243,16 +243,16 @@ class Task
     # that created this entity
     #
     if @entity.children.include? new_entity
-      @task_logger.log "Skipping association of #{current_entity} and #{new_entity}. It's already a child."
+      @task_logger.log "Skipping association of #{@entity} and #{new_entity}. It's already a child."
     else
-      @task_logger.log "Associating #{current_entity} with #{new_entity} and task run #{@task_run} with entity mappings"
+      @task_logger.log "Associating #{@entity} with #{new_entity} and task run #{@task_run} with entity mappings"
 
       #
       # Create a new entity mapping
       #
       entity_mapping = EntityMapping.create(
-        :parent_id => current_entity.id,
-        :parent_type => current_entity.class.to_s,
+        :parent_id => @entity.id,
+        :parent_type => @entity.class.to_s,
         :child_id => new_entity.id,
         :child_type => new_entity.class.to_s,
         :task_run_id => @task_run.id)
@@ -261,8 +261,8 @@ class Task
       # Add to entity mappings on both sides
       #
       @task_logger.log "Associating #{current_entity} with child entity #{new_entity} through #{entity_mapping}"
-      current_entity.entity_mappings << entity_mapping
-      current_entity.save
+      @entity.entity_mappings << entity_mapping
+      @entity.save
 
       ## TODO - Oh man. .save! doesnt actually persist the relation. File a mongoid bug.
 

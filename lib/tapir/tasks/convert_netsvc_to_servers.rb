@@ -77,6 +77,21 @@ end
     :netsvc => @entity
   })
 
+  # Resolve DNS records for this netsvc
+  begin
+    resolved_name = Resolv.new.getname(@entity.host.name).to_s
+    if resolved_name
+      # Create our new dns record entity with the resolved name
+      d = create_entity(Entities::DnsRecord, {:name => resolved_name})
+      # Add the dns record for this host
+      @entity.host.dns_records << d
+    else
+      @task_logger.log "Unable to find a name for #{@entity.name}"
+    end
+  rescue Exception => e
+    @task_logger.error "Hit exception: #{e}"
+  end
+
   # For each attached dns record, do the same
   @entity.host.dns_records.each do |d|
     uri = "#{protocol}#{d.name}:#{@entity.port_num}"

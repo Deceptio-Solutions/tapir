@@ -260,13 +260,13 @@ class Task
       #
       # Add to entity mappings on both sides
       #
-      @task_logger.log "Associating #{current_entity} with child entity #{new_entity} through #{entity_mapping}"
+      @task_logger.log "Associating #{@entity} with child entity #{new_entity} through #{entity_mapping}"
       @entity.entity_mappings << entity_mapping
       @entity.save
 
       ## TODO - Oh man. .save! doesnt actually persist the relation. File a mongoid bug.
 
-      @task_logger.log "Associating #{new_entity} with parent entity #{current_entity} through #{entity_mapping}"
+      @task_logger.log "Associating #{new_entity} with parent entity #{@entity} through #{entity_mapping}"
       new_entity.entity_mappings << entity_mapping
       new_entity.save
     end

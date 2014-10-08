@@ -1,7 +1,5 @@
 require 'open_uri_redirections'
 
-include Client::Web
-
 def name
   "web_scan"
 end

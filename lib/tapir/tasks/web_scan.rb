@@ -63,11 +63,15 @@ def run
     # Do the request
     content = open_uri_and_return_content(url,@task_logger)
 
+    # Return if we didn't get anyting
+    next unless content
+
     # Check to make sure this is a legit page, and create an entity if so
     # 
     # Note that the signature is blank for unsig_checks
     #
     # TODO - improve the checking for wildcard page returns and 404-200's
+
     if content.include? check[:signature] and content != missing_page_content
       # create an entity if we match
       create_entity Entities::WebPage, { :name => "#{url}", :uri => "#{url}", :content => "#{content}" }

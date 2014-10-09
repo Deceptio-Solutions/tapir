@@ -51,7 +51,7 @@ def run
   to_check += unsig_check_list
 
   test_url = "#{@entity.name}/there-is-no-way-this-exists-#{rand(10000)}"
-  missing_page_content = open_uri_and_return_content(test_url)
+  missing_page_content = open_uri_and_return_content(test_url,@task_logger)
 
   # Run through the checks
   to_check.each do |check|
@@ -62,7 +62,7 @@ def run
     @task_logger.log "Connecting to #{url} for #{@entity}" 
 
     # Do the request
-    content = open_uri_and_return_content(url)
+    content = open_uri_and_return_content(url,@task_logger)
 
     # Check to make sure this is a legit page, and create an entity if so
     # 

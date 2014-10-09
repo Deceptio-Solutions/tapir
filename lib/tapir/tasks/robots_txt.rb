@@ -47,10 +47,10 @@ def run
     # Grab a known-missing page so we can make sure it's not a 
     # 404 disguised as a 200
     test_url = "#{@entity.name}/there-is-no-way-this-exists-#{rand(10000)}"
-    missing_page_content = open_uri_and_return_content(test_url)
+    missing_page_content = open_uri_and_return_content(test_url,@task_logger)
 
     # Do the request
-    content = open_uri_and_return_content(url)
+    content = open_uri_and_return_content(url,@task_logger)
 
     # Check to make sure this is a legit page, and create an entity if so
     # TODO - improve the checking for wildcard page returns and 404-200's

@@ -74,8 +74,6 @@ def http_fetch(uri_str,limit = 10)
     rescue Encoding::UndefinedConversionError => e
       @task_logger.log "Encoding error: #{e}"
     end
-    
-  response
   end
 
 

@@ -58,7 +58,6 @@ def run
 
     # Concat the uri to create the check
     url = "#{@entity.name}/#{check[:path]}"
-
     @task_logger.log "Connecting to #{url} for #{@entity}" 
 
     # Do the request
@@ -70,10 +69,8 @@ def run
     #
     # TODO - improve the checking for wildcard page returns and 404-200's
     if content.include? check[:signature] and content != missing_page_content
-
       # create an entity if we match
       create_entity Entities::WebPage, { :name => "#{url}", :uri => "#{url}", :content => "#{content}" }
-
     end
 
   end

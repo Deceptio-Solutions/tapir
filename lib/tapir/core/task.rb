@@ -1,3 +1,5 @@
+require 'timeout'
+
 class Task
 
   attr_accessor :task_logger
@@ -90,8 +92,12 @@ class Task
   def open_uri_and_return_content(uri,logger)
     begin
 
-      # Prevent encoding errors
-      content = open("#{uri}", :allow_redirections => :safe).read.force_encoding('UTF-8')
+      content = nil
+
+      Timeout::timeout(5) {
+        # Prevent encoding errors
+        content = open("#{uri}", :allow_redirections => :safe).read.force_encoding('UTF-8')
+      }
 
     # Lots and lots of things to go wrong... wah wah.
     rescue OpenURI::HTTPError => e

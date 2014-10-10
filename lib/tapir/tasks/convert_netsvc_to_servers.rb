@@ -98,7 +98,7 @@ server_types.each do |s|
       :netsvc => @entity
     })
   end
-
+end
 end
 
 def cleanup

@@ -60,9 +60,6 @@ server_types.each do |s|
     create_entity(s[:entity_type], { :name => s[:entity_name], :host => @entity.host} )
   end
 
-end
-
-=begin
   # determine if this is an SSL application
   ssl = true if [443,8443].include? @entity.port_num
   
@@ -101,7 +98,7 @@ end
       :netsvc => @entity
     })
   end
-=end
+
 end
 
 def cleanup

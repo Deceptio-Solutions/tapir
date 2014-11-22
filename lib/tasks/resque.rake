@@ -9,17 +9,52 @@ namespace :resque do
     queues = Resque.queues
     queues.each do |queue_name|
       puts "Clearing #{queue_name}..."
-      Resque.redis.del "queue:#{queue_name}"
+      Resque.remove_queue queue_name
     end
-    
-    puts "Clearing delayed..." # in case of scheduler - doesn't break if no scheduler module is installed
-    Resque.redis.keys("delayed:*").each do |key|
-      Resque.redis.del "#{key}"
-    end
-    Resque.redis.del "delayed_queue_schedule"
-    
-    puts "Clearing stats..."
-    Resque.redis.set "stat:failed", 0 
-    Resque.redis.set "stat:processed", 0
   end
+
+  desc "list workers"
+  task :list_workers => :environment do
+    if Resque.workers.any?
+      Resque.workers.each do |worker|
+        puts "#{worker} (#{worker.state})"
+      end
+    else
+      puts "None"
+    end
+  end
+
+  desc "list queues"
+  task :list_queues => :environment do
+    Resque.queues.each do |queue|
+      puts"Queue #{queue}: #{Resque.size(queue)}"
+    end
+  end
+
+  desc "kill all workers"
+  task :kill_workers => :environment do
+    if Resque.workers.any?
+      Resque.workers.each do |worker|
+        abort "** resque kill WORKER_ID" if worker.nil?
+        pid = worker.split(':')[1].to_i
+
+        begin
+          Process.kill("KILL", pid)
+          puts "** killed #{worker}"
+        rescue Errno::ESRCH
+          puts "** worker #{worker} not running"
+        end
+
+        remove worker
+      end
+    end
+  end
+
+  def remove(worker)
+    abort "** resque remove WORKER_ID" if worker.nil?
+
+    Resque.remove_worker(worker)
+    puts "** removed #{worker}"
+  end 
+
 end
